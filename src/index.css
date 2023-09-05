@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.data-table .p-datatable-row-expansion{
+  background-color: rgb(216, 18, 18) !important;
+}	
+
+.calender-datatable {
+  background-color: transparent !important;
+  border: 0px !important;
+}
+.calender-datatable .p-inputtext {
+  background-color: transparent !important;
+  border: 0px !important;
+}
+
+.calender-datatable  button svg { color: #000; }
+.calender-datatable  .p-button{
+  background-color: transparent !important;
+  border: 0px;
+}
+
+.p-paginator{
+  display: none !important;
+}
+
+.bg-yellow{
+  background-color: rgba(255, 255, 0, 0.400) !important;
+}
+
+.bg-red{
+  background-color: rgba(255, 0, 0, 0.400) !important;
+  color: white !important;
+}
