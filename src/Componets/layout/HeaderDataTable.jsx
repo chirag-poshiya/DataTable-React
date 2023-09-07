@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 export default function HeaderDataTable() {
     return (
         <div>
-            <div className='p-[10px] flex items-center justify-between'>
+            <div className='py-[10px] px-[30px] flex items-center justify-between'>
                 <div>
                     <p className='text-[30px] font-bold'>Logo</p>
                     <p className='text-[15px] font-medium'>WMF Update request</p>

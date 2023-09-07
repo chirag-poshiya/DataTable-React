@@ -1,7 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* 
+.data-table{
+  padding: 0px 50px;
+} */
 
+.p-datatable-header{
+  padding: 10px 50px !important;
+}
 
 .data-table .p-datatable-row-expansion{
   background-color: rgb(216, 18, 18) !important;
@@ -26,11 +33,23 @@
   display: none !important;
 }
 
-.bg-yellow{
+.bg-yellow,
+.bg-yellow-1,
+.bg-yellow-2{
   background-color: rgba(255, 255, 0, 0.400) !important;
 }
 
+.bg-red-1,
 .bg-red{
   background-color: rgba(255, 0, 0, 0.400) !important;
   color: white !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td{
+  padding:  0px 1rem !important;
+}
+
+::-webkit-scrollbar{
+  width: 5px;
+  height: 5px;
 }

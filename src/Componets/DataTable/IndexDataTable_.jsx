@@ -34,6 +34,9 @@ export default function CustomersDemo() {
   const rowClass = (rowData) => {
     return {
       'bg-yellow': rowData.country.name === 'Egypt',
+      'bg-yellow-2': rowData.country.name === 'Algeria',
+      'bg-yellow-1': rowData.country.name === 'Panama',
+      'bg-red-1': rowData.country.name === 'South Africa',
       'bg-red': rowData.country.name === 'Slovenia'
     };
   };
@@ -155,7 +158,7 @@ export default function CustomersDemo() {
 
     return (
       <div className="flex align-items-center gap-2">
-        <img alt={representative.name} src={`https://primefaces.org/cdn/primereact/images/avatar/${representative.image}`} width="32" />
+        {/* <img alt={representative.name} src={`https://primefaces.org/cdn/primereact/images/avatar/${representative.image}`} width="32" /> */}
         <span>{representative.name}</span>
       </div>
     );
@@ -289,7 +292,7 @@ export default function CustomersDemo() {
   return (<div>
 
 
-    <div className="data-table">
+    <div className="data-table ">
       <DataTable editMode="row" onRowEditComplete={onRowEditComplete} rowClassName={rowClass} value={customers} paginator header={header} rows={5}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
