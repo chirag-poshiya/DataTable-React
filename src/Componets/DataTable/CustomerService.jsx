@@ -2,6 +2,7 @@ export const CustomerService = {
     getData() {
         return [
             {
+                number: 1,
                 id: 1000,
                 name: 'James Butt',
                 country: {
@@ -20,6 +21,7 @@ export const CustomerService = {
                 balance: 70663
             },
             {
+                number: 2,
                 id: 1001,
                 name: 'Josephine Darakjy',
                 country: {
@@ -38,6 +40,7 @@ export const CustomerService = {
                 balance: 82429
             },
             {
+                number: 3,
                 id: 1002,
                 name: 'Art Venere',
                 country: {
@@ -56,6 +59,7 @@ export const CustomerService = {
                 balance: 28334
             },
             {
+                number: 4,
                 id: 1003,
                 name: 'Lenna Paprocki',
                 country: {
@@ -74,6 +78,7 @@ export const CustomerService = {
                 balance: 88521
             },
             {
+                number: 5,
                 id: 1004,
                 name: 'Donette Foller',
                 country: {
@@ -113,8 +118,8 @@ export const CustomerService = {
     getCustomers(params) {
         const queryParams = params
             ? Object.keys(params)
-                  .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-                  .join('&')
+                .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                .join('&')
             : '';
 
         return fetch('https://www.primefaces.org/data/customers?' + queryParams).then((res) => res.json());

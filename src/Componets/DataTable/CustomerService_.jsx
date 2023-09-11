@@ -57,7 +57,7 @@ export const CustomerService = {
             },
             {
                 id: 1003,
-                name: 'Lenna Paprocki',
+                name: '1 Paprocki',
                 country: {
                     name: 'Slovenia',
                     code: 'si'

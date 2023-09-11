@@ -16,6 +16,8 @@ import { CustomerService } from './CustomerService';
 import '../../../src/index.css'
 import { addLocale } from 'primereact/api';
 import { ProductService } from './Products';
+import 'primeicons/primeicons.css';
+
 
 
 
@@ -28,12 +30,11 @@ export default function CustomersDemo() {
 
   useEffect(() => {
     ProductService.getProductsMini().then(data => setProducts(data));
-    console.log('first')
   }, []);
 
   const rowClass = (rowData) => {
     return {
-      'bg-yellow': rowData.country.name === 'Egypt',
+      '': rowData.country.name === 'Egypt',
       'bg-yellow-2': rowData.country.name === 'Algeria',
       'bg-yellow-1': rowData.country.name === 'Panama',
       'bg-red-1': rowData.country.name === 'South Africa',
@@ -45,11 +46,11 @@ export default function CustomersDemo() {
 
   addLocale('es', {
     firstDayOfWeek: 1,
-    dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+    dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-    dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-    monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
-    monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+    dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     today: 'Hoy',
     clear: 'Limpiar'
   });
@@ -134,10 +135,10 @@ export default function CustomersDemo() {
 
   const renderHeader = () => {
     return (
-      <div className="w-full flex flex-wrap gap-2 justify-between align-items-center">
+      <div className="w-full flex flex-wrap gap-2 justify-between items-center">
         <h4 className="m-0">Customers</h4>
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
+        <span className="p-input-icon-left relative">
+          <span className="pi pi-search absolute top-[50%] translate-y-[-50%] left-3" style={{ color: '#9ca3afb0' }}></span>
           <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
         </span>
       </div>
@@ -147,7 +148,7 @@ export default function CustomersDemo() {
   const countryBodyTemplate = (rowData) => {
     return (
       <div className="flex align-items-center gap-2">
-        {/* <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} /> */}
+        <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} />
         <span>{rowData.country.name}</span>
       </div>
     );
@@ -198,7 +199,7 @@ export default function CustomersDemo() {
     return <InputNumber value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} mode="currency" currency="USD" locale="en-US" />;
   };
 
-  const statusBodyTemplate = (options , rowData) => {
+  const statusBodyTemplate = (options, rowData) => {
     return <InputText
       className='border-0 calender-datatable'
       value={options.id}
@@ -292,13 +293,13 @@ export default function CustomersDemo() {
   return (<div>
 
 
-    <div className="data-table ">
+    <div className="data-table px-[30px] pb-[30px]">
       <DataTable editMode="row" onRowEditComplete={onRowEditComplete} rowClassName={rowClass} value={customers} paginator header={header} rows={5}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
         filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-        emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-        <Column headerStyle={{ width: '3rem' }}></Column>
+        emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+        <Column className="font-bold" field="number" header="#" filterPlaceholder="Search by number" headerStyle={{ width: '3rem' }}></Column>
         <Column field="name" header="Wk" sortable filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
         <Column field="country.name" header="CDA" filterField="country.name" style={{ minWidth: '14rem' }} body={countryBodyTemplate} filterPlaceholder="Search by country" />
         <Column header="Material" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
@@ -310,9 +311,9 @@ export default function CustomersDemo() {
         <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
       </DataTable>
 
-      <DataTable value={customers} rows={5} paginator
+      <DataTable id="second-table" value={customers} rows={5} paginator 
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown">
-        <Column headerStyle={{ width: '3rem' }}></Column>
+        <Column className="font-bold" field="number" headerStyle={{ width: '3rem' }}></Column>
         <Column field="name" filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
         <Column field="country.name" filterField="country.name" style={{ minWidth: '14rem' }} body={countryBodyTemplate} filterPlaceholder="Search by country" />
         <Column sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
