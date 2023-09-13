@@ -310,21 +310,6 @@ export default function CustomersDemo(props) {
     <div className="assss data-table pb-[30px]">
       <div className='border-t'>
         <div className=''>
-          {/* <p>{data.map(item => (
-            <li key={item.id}>{item.part_number}</li>
-          ))}</p> */}
-          {/* rowClassName={rowClass}  */}
-          {/* <DataTable rowClassName={rowClass} value={data} id="first-table" editMode="row" onRowEditComplete={onRowEditComplete} paginator header={header} rows={5}
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
-            filterField="date" dataType="date" style={{ minWidth: '12rem' }} filterElement={dateFilterTemplate}
-            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-            <Column field="id" className="font-medium" header="#" filterPlaceholder="Search by number" headerStyle={{ width: '3rem' }}/>
-            <Column field="part_number" header="Name"  sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate}/>
-            <Column field="material_description" header="Age" />
-          </DataTable> */}
           {tableData && 
           <>
           <DataTable  id="first-table" rowClassName={rowClass} editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator header={header} rows={5}
@@ -361,38 +346,6 @@ export default function CustomersDemo(props) {
           </DataTable>
           </>
           }
-          
-
-          {/* <DataTable id="first-table" editMode="row" onRowEditComplete={onRowEditComplete} rowClassName={rowClass} value={data} paginator header={header} rows={5}
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
-            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-            <Column className="font-medium" field="number" header="#" filterPlaceholder="Search by number" headerStyle={{ width: '3rem' }}></Column>
-            <Column field="name" header="Wk" sortable filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
-            <Column field="country.name" header="CDA" filterField="country.name" style={{ minWidth: '14rem' }} filterPlaceholder="Search by country" />
-            <Column field="id" header="Material" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate} ></Column>
-
-            <Column field="date" header="Description" filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filterElement={dateFilterTemplate} />
-            <Column field="balance" header="..." dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
-            <Column editor={(options) => priceEditor(options)} field="status" header="Exp Quanity" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
-            <Column editor={(options) => textEditor(options)} field="activity" header="Exp delivery date" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
-            <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
-          </DataTable>
-          <DataTable id="second-table" value={customers} rows={5} paginator
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown">
-            <Column className="font-medium" field="number" headerStyle={{ width: '3rem' }}></Column>
-            <Column field="name" filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
-            <Column field="country.name" filterField="country.name" style={{ minWidth: '14rem' }} body={countryBodyTemplate} filterPlaceholder="Search by country" />
-            <Column sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-              style={{ minWidth: '14rem' }} body={representativeBodyTemplate} filterElement={representativeFilterTemplate} />
-            <Column field="date" filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filterElement={dateFilterTemplate} />
-            <Column field="balance" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
-            <Column field="status" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
-            <Column field="activity" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
-            <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
-          </DataTable> */}
         </div>
       </div>
     </div>
