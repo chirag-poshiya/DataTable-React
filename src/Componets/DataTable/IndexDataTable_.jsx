@@ -16,40 +16,44 @@ import { CustomerService } from './CustomerService';
 import '../../../src/index.css'
 import { addLocale } from 'primereact/api';
 import { ProductService } from './Products';
+import 'primeicons/primeicons.css';
+
+import axios from 'axios';
 
 
 
-export default function CustomersDemo() {
+
+export default function CustomersDemo(props) {
+
   const [customers, setCustomers] = useState([]);
   const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [datedata, setDatedata] = useState(null);
   const [products, setProducts] = useState([]);
-  const [rowData, setrowData] = useState([]);
+  // const [rowData, setrowData] = useState([]);
 
   useEffect(() => {
     ProductService.getProductsMini().then(data => setProducts(data));
-    console.log('first')
-  }, []);
+  }, []); 
 
-  const rowClass = (rowData) => {
+  const rowClass = (data) => {
     return {
-      'bg-yellow': rowData.country.name === 'Egypt',
-      'bg-yellow-2': rowData.country.name === 'Algeria',
-      'bg-yellow-1': rowData.country.name === 'Panama',
-      'bg-red-1': rowData.country.name === 'South Africa',
-      'bg-red': rowData.country.name === 'Slovenia'
+      'bg-yellow-3': data.part_number === 'xmr9sUlWsN',
+      'bg-yellow-2': data.part_number === 'x5Bq5hcILd',
+      'bg-yellow': data.part_number === 'aeePO3owJo',
+      'bg-yellow-1': data.part_number === 'lWMy5Ynz4v',
     };
   };
 
 
 
+
   addLocale('es', {
     firstDayOfWeek: 1,
-    dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
-    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-    dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-    monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
-    monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+    dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     today: 'Hoy',
     clear: 'Limpiar'
   });
@@ -111,11 +115,11 @@ export default function CustomersDemo() {
   };
 
   const formatDate = (value) => {
-    return value.toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
+    // return value.toLocaleDateString('en-US', {
+    //   day: '2-digit',
+    //   month: '2-digit',
+    //   year: 'numeric'
+    // });
   };
 
   const formatCurrency = (value) => {
@@ -134,10 +138,10 @@ export default function CustomersDemo() {
 
   const renderHeader = () => {
     return (
-      <div className="w-full flex flex-wrap gap-2 justify-between align-items-center">
-        <h4 className="m-0">Customers</h4>
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
+      <div className="w-full flex flex-wrap gap-2 justify-between items-center">
+        <h4 className="m-0 text-[24px]">Customers</h4>
+        <span className="p-input-icon-left relative">
+          <span className="pi pi-search absolute top-[50%] translate-y-[-50%] left-3" style={{ color: '#9ca3afb0' }}></span>
           <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
         </span>
       </div>
@@ -147,7 +151,7 @@ export default function CustomersDemo() {
   const countryBodyTemplate = (rowData) => {
     return (
       <div className="flex align-items-center gap-2">
-        {/* <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} /> */}
+        <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} />
         <span>{rowData.country.name}</span>
       </div>
     );
@@ -198,10 +202,10 @@ export default function CustomersDemo() {
     return <InputNumber value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} mode="currency" currency="USD" locale="en-US" />;
   };
 
-  const statusBodyTemplate = (options , rowData) => {
+  const statusBodyTemplate = (options, rowData) => {
     return <InputText
       className='border-0 calender-datatable'
-      value={options.id}
+      
       onChange={(e) => {
         let _data = [...customers];
         console.log(_data);
@@ -216,6 +220,9 @@ export default function CustomersDemo() {
   const statusFilterTemplate = (options) => {
     return <Dropdown value={options.value} options={statuses} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={statusItemTemplate} placeholder="Select One" className="p-column-filter" showClear />;
   };
+  const disableBodyTemplate = (options) => {
+    return <InputText disabled  className="p-column-filter !border-0" showClear />;
+  };
 
   const statusItemTemplate = (option) => {
     return <Tag value={option} severity={getSeverity(option)} />;
@@ -223,6 +230,9 @@ export default function CustomersDemo() {
 
   const activityBodyTemplate = (rowData) => {
     return <Calendar className='!border-0 calender-datatable' value={rowData.date} onChange={(e) => setDatedata(e.value)} locale="es" />;
+  };
+  const desableBodyTemplate = (rowData) => {
+    return <Calendar disabled className='!border-0 calender-datatable' locale="es" />;
   };
 
   const activityFilterTemplate = (options) => {
@@ -239,16 +249,6 @@ export default function CustomersDemo() {
 
   const actionBodyTemplate = (options, rowData) => {
     return <>
-      {/* {console.log('first', rowData)} */}
-      {/* <InputText className='border-0 calender-datatable' value={rowData.company} onChange={
-        (e) => {
-          console.log(e, a)
-          let updatedRec = [...customers];
-          updatedRec[a.rowIndex]['company'] = e.target.value;
-          setCustomers(customers)
-          console.log(customers, updatedRec)
-        }
-      } /> */}
       <InputText
         className='border-0 calender-datatable'
         value={options.company}
@@ -289,40 +289,112 @@ export default function CustomersDemo() {
 
   const header = renderHeader();
 
+
+  const [tableData, setTableData] = useState([]);
+
+  const getData =  async () => {
+    await axios.get('https://wmf-test.free.mockoapp.net/form/7b3e6d9a2c1b459fa6f88a28f48e1c9f4d72bf7b8c7524cbbf7d9b70d9d86a4e').then( (res) => {
+      return setTableData(res.data.table_data);
+    });
+
+  }
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+
   return (<div>
 
 
-    <div className="data-table ">
-      <DataTable editMode="row" onRowEditComplete={onRowEditComplete} rowClassName={rowClass} value={customers} paginator header={header} rows={5}
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
-        filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-        emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-        <Column headerStyle={{ width: '3rem' }}></Column>
-        <Column field="name" header="Wk" sortable filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
-        <Column field="country.name" header="CDA" filterField="country.name" style={{ minWidth: '14rem' }} body={countryBodyTemplate} filterPlaceholder="Search by country" />
-        <Column header="Material" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-          style={{ minWidth: '14rem' }} body={representativeBodyTemplate} filterElement={representativeFilterTemplate} />
-        <Column field="date" header="Description" filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filterElement={dateFilterTemplate} />
-        <Column field="balance" header="..." dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
-        <Column editor={(options) => priceEditor(options)} field="status" header="Exp Quanity" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
-        <Column editor={(options) => textEditor(options)} field="activity" header="Exp delivery date" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
-        <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
-      </DataTable>
+    <div className="assss data-table pb-[30px]">
+      <div className='border-t'>
+        <div className=''>
+          {/* <p>{data.map(item => (
+            <li key={item.id}>{item.part_number}</li>
+          ))}</p> */}
+          {/* rowClassName={rowClass}  */}
+          {/* <DataTable rowClassName={rowClass} value={data} id="first-table" editMode="row" onRowEditComplete={onRowEditComplete} paginator header={header} rows={5}
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            filterField="date" dataType="date" style={{ minWidth: '12rem' }} filterElement={dateFilterTemplate}
+            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
+            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+            <Column field="id" className="font-medium" header="#" filterPlaceholder="Search by number" headerStyle={{ width: '3rem' }}/>
+            <Column field="part_number" header="Name"  sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
+              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate}/>
+            <Column field="material_description" header="Age" />
+          </DataTable> */}
+          {tableData && 
+          <>
+          <DataTable  id="first-table" rowClassName={rowClass} editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator header={header} rows={5}
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
+            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+            <Column className="whitespace-nowrap" field="part_number" header="Part Number" filterPlaceholder="Search by number" ></Column>
+            <Column field="plant_name" header="Plant Name" sortable filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
+            <Column field="plant_code" header="Plant Code" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
+              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate} ></Column>
+            <Column field="material_description" header="CDA" filterField="country.name" style={{ minWidth: '14rem' }} filterPlaceholder="Search by country" />
+            <Column field="supplier_name" header="Supplier Name" filterField="date" dataType="date" style={{ minWidth: '12rem' }} filterElement={dateFilterTemplate} />
+            <Column field="supplier_sap_code" header="Sap Code" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
+            <Column editor={(options) => priceEditor(options)} field="status" header="Exp Quanity" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
+            <Column editor={(options) => textEditor(options)} field="activity" header="Exp delivery date" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
+            <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
+          </DataTable>
+          <DataTable  id="second-table" editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator rows={5}
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
+            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+            <Column className="whitespace-nowrap" field="part_number" filterPlaceholder="Search by number" ></Column>
+            <Column field="plant_name" filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
+            <Column field="plant_code" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
+              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate} ></Column>
+            <Column field="material_description" filterField="country.name" style={{ minWidth: '14rem' }} filterPlaceholder="Search by country" />
+            <Column field="supplier_name" filterField="date" dataType="date" style={{ minWidth: '12rem' }} filterElement={dateFilterTemplate} />
+            <Column field="supplier_sap_code" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
+            <Column field="" editor={(options) => priceEditor(options)} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={disableBodyTemplate}  filterElement={statusFilterTemplate} />
+            <Column field="" editor={(options) => textEditor(options)} showFilterMatchModes={false} style={{ minWidth: '12rem' }} filterElement={activityFilterTemplate} body={desableBodyTemplate} />
+            <Column field="" editor={(options) => statusEditor(options)} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate}/>
+          </DataTable>
+          </>
+          }
+          
 
-      <DataTable value={customers} rows={5} paginator
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown">
-        <Column headerStyle={{ width: '3rem' }}></Column>
-        <Column field="name" filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
-        <Column field="country.name" filterField="country.name" style={{ minWidth: '14rem' }} body={countryBodyTemplate} filterPlaceholder="Search by country" />
-        <Column sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-          style={{ minWidth: '14rem' }} body={representativeBodyTemplate} filterElement={representativeFilterTemplate} />
-        <Column field="date" filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filterElement={dateFilterTemplate} />
-        <Column field="balance" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
-        <Column field="status" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
-        <Column field="activity" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
-        <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
-      </DataTable>
+          {/* <DataTable id="first-table" editMode="row" onRowEditComplete={onRowEditComplete} rowClassName={rowClass} value={data} paginator header={header} rows={5}
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
+            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+            <Column className="font-medium" field="number" header="#" filterPlaceholder="Search by number" headerStyle={{ width: '3rem' }}></Column>
+            <Column field="name" header="Wk" sortable filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
+            <Column field="country.name" header="CDA" filterField="country.name" style={{ minWidth: '14rem' }} filterPlaceholder="Search by country" />
+            <Column field="id" header="Material" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
+              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate} ></Column>
+
+            <Column field="date" header="Description" filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filterElement={dateFilterTemplate} />
+            <Column field="balance" header="..." dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
+            <Column editor={(options) => priceEditor(options)} field="status" header="Exp Quanity" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
+            <Column editor={(options) => textEditor(options)} field="activity" header="Exp delivery date" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
+            <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
+          </DataTable>
+          <DataTable id="second-table" value={customers} rows={5} paginator
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown">
+            <Column className="font-medium" field="number" headerStyle={{ width: '3rem' }}></Column>
+            <Column field="name" filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
+            <Column field="country.name" filterField="country.name" style={{ minWidth: '14rem' }} body={countryBodyTemplate} filterPlaceholder="Search by country" />
+            <Column sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
+              style={{ minWidth: '14rem' }} body={representativeBodyTemplate} filterElement={representativeFilterTemplate} />
+            <Column field="date" filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filterElement={dateFilterTemplate} />
+            <Column field="balance" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
+            <Column field="status" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
+            <Column field="activity" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
+            <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
+          </DataTable> */}
+        </div>
+      </div>
     </div>
   </div>
   );
