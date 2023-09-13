@@ -123,3 +123,6 @@
 .p-datatable-tbody tr:nth-child(5) td{
   border-bottom: 0 !important;
 }
+.p-column-header-content span svg path {
+  stroke: #c5c5c5;
+}

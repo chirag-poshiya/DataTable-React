@@ -33,7 +33,7 @@ export default function CustomersDemo(props) {
 
   useEffect(() => {
     ProductService.getProductsMini().then(data => setProducts(data));
-  }, []); 
+  }, []);
 
   const rowClass = (data) => {
     return {
@@ -205,7 +205,7 @@ export default function CustomersDemo(props) {
   const statusBodyTemplate = (options, rowData) => {
     return <InputText
       className='border-0 calender-datatable'
-      
+
       onChange={(e) => {
         let _data = [...customers];
         console.log(_data);
@@ -221,7 +221,7 @@ export default function CustomersDemo(props) {
     return <Dropdown value={options.value} options={statuses} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={statusItemTemplate} placeholder="Select One" className="p-column-filter" showClear />;
   };
   const disableBodyTemplate = (options) => {
-    return <InputText disabled  className="p-column-filter !border-0" showClear />;
+    return <InputText disabled className="p-column-filter !border-0" showClear />;
   };
 
   const statusItemTemplate = (option) => {
@@ -292,8 +292,8 @@ export default function CustomersDemo(props) {
 
   const [tableData, setTableData] = useState([]);
 
-  const getData =  async () => {
-    await axios.get('https://wmf-test.free.mockoapp.net/form/7b3e6d9a2c1b459fa6f88a28f48e1c9f4d72bf7b8c7524cbbf7d9b70d9d86a4e').then( (res) => {
+  const getData = async () => {
+    await axios.get('https://wmf-test.free.mockoapp.net/form/7b3e6d9a2c1b459fa6f88a28f48e1c9f4d72bf7b8c7524cbbf7d9b70d9d86a4e').then((res) => {
       return setTableData(res.data.table_data);
     });
 
@@ -304,51 +304,71 @@ export default function CustomersDemo(props) {
 
 
 
-  return (<div>
-
-
-    <div className="assss data-table pb-[30px]">
-      <div className='border-t'>
-        <div className=''>
-          {tableData && 
-          <>
-          <DataTable  id="first-table" rowClassName={rowClass} editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator header={header} rows={5}
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
-            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-            <Column className="whitespace-nowrap" field="part_number" header="Part Number" filterPlaceholder="Search by number" ></Column>
-            <Column field="plant_name" header="Plant Name" sortable filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
-            <Column field="plant_code" header="Plant Code" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate} ></Column>
-            <Column field="material_description" header="CDA" filterField="country.name" style={{ minWidth: '14rem' }} filterPlaceholder="Search by country" />
-            <Column field="supplier_name" header="Supplier Name" filterField="date" dataType="date" style={{ minWidth: '12rem' }} filterElement={dateFilterTemplate} />
-            <Column field="supplier_sap_code" header="Sap Code" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
-            <Column editor={(options) => priceEditor(options)} field="status" header="Exp Quanity" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
-            <Column editor={(options) => textEditor(options)} field="activity" header="Exp delivery date" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
-            <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
-          </DataTable>
-          <DataTable  id="second-table" editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator rows={5}
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
-            filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-            emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-            <Column className="whitespace-nowrap" field="part_number" filterPlaceholder="Search by number" ></Column>
-            <Column field="plant_name" filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
-            <Column field="plant_code" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterMenuStyle={{ width: '14rem' }}
-              style={{ minWidth: '14rem' }} filterElement={representativeFilterTemplate} ></Column>
-            <Column field="material_description" filterField="country.name" style={{ minWidth: '14rem' }} filterPlaceholder="Search by country" />
-            <Column field="supplier_name" filterField="date" dataType="date" style={{ minWidth: '12rem' }} filterElement={dateFilterTemplate} />
-            <Column field="supplier_sap_code" dataType="numeric" style={{ minWidth: '12rem' }} body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
-            <Column field="" editor={(options) => priceEditor(options)} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={disableBodyTemplate}  filterElement={statusFilterTemplate} />
-            <Column field="" editor={(options) => textEditor(options)} showFilterMatchModes={false} style={{ minWidth: '12rem' }} filterElement={activityFilterTemplate} body={desableBodyTemplate} />
-            <Column field="" editor={(options) => statusEditor(options)} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate}/>
-          </DataTable>
-          </>
-          }
+  // style={{ minWidth: '14rem' }}
+  return (
+    <div>
+      <div className="assss data-table pb-[30px]">
+        <div className='border-t'>
+          <div className=''>
+            {tableData &&
+              <>
+                <DataTable id="first-table" rowClassName={rowClass} editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator header={header} rows={5}
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
+                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
+                  emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+                  <Column className="whitespace-nowrap" field="part_number" header="Part Number" filterPlaceholder="Search by number" ></Column>
+                  <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable filterPlaceholder="Search by name" />
+                  <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterElement={representativeFilterTemplate} ></Column>
+                  <Column className="whitespace-nowrap" field="plant_name" header="Plant Name" filterField="country.name" filterPlaceholder="Search by country" />
+                  <Column className="whitespace-nowrap" field="supplier_sap_code" header="Sap Code" dataType="numeric" body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="supplier_name" header="Supplier Name" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="last_receipt_packlist" header="Last Receipt Packlist" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="firm_qty" header="Firm Qty" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w" header="W" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="current_week_no" header="Current Week NO" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="balance" header="Balance" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column editor={(options) => priceEditor(options)} className="whitespace-nowrap" field="status" header="Exp Quanity" filterMenuStyle={{ width: '14rem' }} body={statusBodyTemplate} filterElement={statusFilterTemplate} />
+                  <Column editor={(options) => textEditor(options)} className="whitespace-nowrap" field="activity" header="Exp delivery date" showFilterMatchModes={false} body={activityBodyTemplate} filterElement={activityFilterTemplate} />
+                  <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
+                </DataTable>
+                {/* <DataTable id="second-table" editMode="row" onRowEditComplete={onRowEditComplete} value={tableData} paginator rows={5}
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
+                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
+                  emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+                  <Column className="whitespace-nowrap" field="part_number" header="Part Number" filterPlaceholder="Search by number" ></Column>
+                  <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable filterPlaceholder="Search by name" />
+                  <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortField="representative.name" filterField="representative" showFilterMatchModes={false} filterElement={representativeFilterTemplate} ></Column>
+                  <Column className="whitespace-nowrap" field="plant_name" header="Plant Name" filterField="country.name" filterPlaceholder="Search by country" />
+                  <Column className="whitespace-nowrap" field="supplier_sap_code" header="Sap Code" dataType="numeric" body={balanceBodyTemplate} filterElement={balanceFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="supplier_name" header="Supplier Name" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="last_receipt_packlist" header="Last Receipt Packlist" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="firm_qty" header="Firm Qty" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w" header="W" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="current_week_no" header="Current Week NO" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="balance" header="Balance" filterField="date" dataType="date" filterElement={dateFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="" editor={(options) => priceEditor(options)} filterMenuStyle={{ width: '14rem' }} body={disableBodyTemplate} filterElement={statusFilterTemplate} />
+                  <Column className="whitespace-nowrap" field="" editor={(options) => textEditor(options)} showFilterMatchModes={false} filterElement={activityFilterTemplate} body={desableBodyTemplate} />
+                  <Column className="whitespace-nowrap" field="" editor={(options) => statusEditor(options)} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate} />
+                </DataTable> */}
+              </>
+            }
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
