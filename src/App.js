@@ -4,16 +4,17 @@ import IndexDataTable from './Componets/DataTable/IndexDataTable_';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import HeaderDataTable from './Componets/layout/HeaderDataTable';
-import CustomerService from './Componets/DataTable/CustomerService';
+import { WordCountProvider } from './Context/WordCountContext';
 
 
 
 function App() {
   return (
     <>
-      <HeaderDataTable />
-      <IndexDataTable/>
-      {/* <CustomerService /> */}
+      <WordCountProvider>
+        <HeaderDataTable />
+        <IndexDataTable />
+      </WordCountProvider>      
     </>
   );
 }
