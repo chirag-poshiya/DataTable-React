@@ -107,7 +107,7 @@
 #second-table .p-datatable-thead {
  display: none;
 }
-*/ #second-table .p-datatable-tbody {
+#second-table .p-datatable-tbody {
   padding-top: 20px !important;
 }
 .p-datatable-wrapper {
