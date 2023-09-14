@@ -39,8 +39,7 @@ export default function HeaderDataTable() {
     // pop-up modal end
 
     const { wordCount } = useWordCount();
-    const isDisabled = wordCount < 3;
-
+    const isDisabled = wordCount < 1;
 
 
     return (
@@ -52,22 +51,26 @@ export default function HeaderDataTable() {
                 </div>
                 <div className='flex items-center justify-end gap-[10px]'>
                     <div className="open-modal-btn">
-                        <Button label="" onClick={() => setVisible(true)} className='border p-2 rounded-lg'>
-                            {isDisabled ? (
-                                <svg
-                                    disabled="true"
-                                    className='w-[20px] h-[20px]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="#343a40" d="m22 2-7 20-4-9-9-4Z" /><path stroke="#343a40" d="M22 2 11 13"
-                                    />
-                                    {/* Your SVG icon code here */}
-                                </svg>
-                            ) : (
-                                <svg
-                                    className='w-[20px] h-[20px]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="#343a40" d="m22 2-7 20-4-9-9-4Z" /><path stroke="#343a40" d="M22 2 11 13"
-                                    />
-                                    {/* Your SVG icon code here */}
-                                </svg>
-                            )}
-                            {/* <svg className='w-[20px] h-[20px]' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" ><path stroke="#343a40" d="m22 2-7 20-4-9-9-4Z" /><path stroke="#343a40" d="M22 2 11 13" /></svg> */}
+                        <Button
+                            label=""
+                            onClick={() => setVisible(true)}
+                            className={`border p-2 rounded-lg ${isDisabled ? 'disabled' : ''}`}
+                            disabled={isDisabled} // Add the disabled attribute to the button
+                            aria-disabled={isDisabled} // For accessibility
+                        >
+                            <svg
+                                className='w-[20px] h-[20px]'
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke={isDisabled ? "#343a40" : "#000"}
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="m22 2-7 20-4-9-9-4Z" />
+                                <path d="M22 2 11 13" />
+                            </svg>
                         </Button>
                         <div className="card flex justify-content-center">
                             <Dialog header="Enter Your Email" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
