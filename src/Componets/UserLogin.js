@@ -8,7 +8,7 @@ import { useWordCount } from '../Context/WordCountContext';
 
 
 
-function UserLogin({ setFormId, setLoading }) {
+function UserLogin({ setFormId, setLoading, setError }) {
 
     const [inputId, setInputId] = useState('');
     // const [apiData, setApiData] = useState(null);
@@ -19,17 +19,18 @@ function UserLogin({ setFormId, setLoading }) {
     const handleSendClick = async () => {
         try {
             setLoading(true);
-
             setFormId(inputId);
+            // setError(false);
             // Make an API request using Axios
             // const response = await axios.get(`https://wmf-test.free.mockoapp.net/form/${inputId}`);
             // const data = response.data;
 
             // // Update the apiData state with the response data
             // setApiData(data);
-            
         } catch (error) {
             console.error('Error fetching data from API:', error);
+            setError(true);
+        } finally {
             setLoading(false);
         }
     };

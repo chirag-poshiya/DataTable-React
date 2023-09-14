@@ -8,23 +8,24 @@ import { WordCountProvider } from './Context/WordCountContext';
 import UserLogin from './Componets/UserLogin';
 import { useState } from 'react';
 import Spinner from './Componets/Spinner.js';
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ErrorModal from './Componets/ErrorModal';
 
 function App() {
   const [formId, setFormId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null); // Add an error state
+
   return (
     <>
       <WordCountProvider>
-        {/* {loading ? ( */}
-          <Spinner loading={loading}/>
-        {/* ) :  */}
+        <Spinner loading={loading} />
         {formId === null ? (
-          <UserLogin setFormId={setFormId} setLoading={setLoading} />
+          <UserLogin setFormId={setFormId} setLoading={setLoading} setError={setError} />
+          // <ErrorModal error={error} />
         ) : (
           <>
             <HeaderDataTable />
-            <IndexDataTable formId={formId} setFormId={setFormId} setLoading={setLoading} />
+            <IndexDataTable formId={formId} setFormId={setFormId} setLoading={setLoading} setError={setError} />
           </>
         )}
       </WordCountProvider>
