@@ -16,13 +16,15 @@ body {
 }
 
 .calender-datatable {
-  background-color: transparent !important;
-  border: 0px !important;
+  /* background-color: white !important; */
+  /* border: 1px solid #ced4da !important; */
+  border-radius: 6px;
 }
 
+
 .calender-datatable .p-inputtext {
-  background-color: transparent !important;
-  border: 0px !important;
+  background-color: white !important;
+  border: 1px solid #ced4da !important;
 }
 
 .calender-datatable button svg {
@@ -34,10 +36,24 @@ body {
   border: 0px;
 }
 
-.p-button,
+.p-button {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
 .p-inputtext {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
+  margin: 5px 0 !important;
+}
+
+.user-login .p-inputtext {
+  margin: 0 !important;
+
+}
+
+.user-login.p-inputtext {
+  margin: 0 !important;
 }
 
 .p-paginator {
@@ -84,7 +100,7 @@ body {
 .p-inputtext:enabled:focus,
 .p-datatable .p-sortable-column:focus {
   box-shadow: unset !important;
-  border-color: unset !important;
+  border-color: #ced4da !important;
 }
 
 .p-highlight {
@@ -161,12 +177,14 @@ body {
   max-width: 25%;
 }
 
-#pr_id_2_content .p-button {
+#pr_id_2_content .p-button,
+.user-login .p-button {
   background: #3b82f6 !important;
   border-color: #3b82f6 !important;
 }
 
-#pr_id_2_content .p-button:focus {
+#pr_id_2_content .p-button:focus,
+.user-login .p-button:focus {
   box-shadow: unset !important;
 }
 
@@ -190,8 +208,50 @@ body {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
   box-shadow: unset !important;
 }
-.p-checkbox .p-checkbox-box.p-highlight{
+
+.p-checkbox .p-checkbox-box.p-highlight {
   border-color: #3b82f6 !important;
   background: #3b82f6 !important;
 
+}
+
+.calender-datatable .p-inputtext {
+  text-align: center !important;
+}
+
+
+/* spinner */
+.spinner-main {
+  /* background-color: #000; */
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+
+.spinner {
+  display: grid;
+  place-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%,
+      #3b82f600 0deg,
+      #3b82f6 360deg);
+  animation: spin 2s infinite linear;
+}
+
+.spinner::before {
+  content: "";
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  background-color: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
 }
