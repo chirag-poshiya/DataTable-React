@@ -52,7 +52,7 @@ function UserLogin({ setFormId, setLoading }) {
                             {/* 7b3e6d9a2c1b459fa6f88a28f48e1c9f4d72bf7b8c7524cbbf7d9b70d9d86a4e */}
                             <InputText
                                 value={inputId}
-                                className='w-[30vw]'
+                                className='w-[30vw] min-w-[500px]'
                                 placeholder='Form id'
                                 onChange={(e) => setInputId(e.target.value)}
                             />
