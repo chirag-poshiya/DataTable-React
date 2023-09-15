@@ -50,18 +50,19 @@ function UserLogin({ setFormId, setLoading, setError }) {
                 <div className='flex justify-center items-center h-[calc(100vh_-_88px)]'>
                     <form action="">
                         <div className='user-login flex gap-5 border rounded-lg p-10 bg-white'>
-                            {/* 7b3e6d9a2c1b459fa6f88a28f48e1c9f4d72bf7b8c7524cbbf7d9b70d9d86a4e */}
-                            <InputText
-                                value={inputId}
-                                className='w-[30vw] min-w-[550px]'
-                                placeholder='Form id'
-                                onChange={(e) => setInputId(e.target.value)}
-                            />
-                            <Button
-                                label="Submit"
-                                className="!bg-blue-500 h-fit"
-                                onClick={handleSendClick}
-                            />
+                            <form>
+                                <InputText
+                                    value={inputId}
+                                    className='w-[30vw] min-w-[550px]'
+                                    placeholder='Form id'
+                                    onChange={(e) => setInputId(e.target.value)}
+                                />
+                                <Button
+                                    label="Submit"
+                                    className="!bg-blue-500 h-fit"
+                                    onClick={handleSendClick}
+                                />
+                            </form>
                         </div>
                     </form>
                 </div>
