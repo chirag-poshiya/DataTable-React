@@ -101,10 +101,10 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       return (
          <div className="w-full flex flex-wrap gap-2 justify-between items-center">
             <h4 className="m-0 text-[1.5rem]">Customers</h4>
-            <span className="p-input-icon-left relative">
+            {/* <span className="p-input-icon-left relative">
                <span className="pi pi-search absolute top-[50%] translate-y-[-50%] left-3" style={{ color: '#9ca3afb0' }}></span>
                <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
-            </span>
+            </span> */}
          </div>
       );
    };
