@@ -8,26 +8,32 @@ import { WordCountProvider } from './Context/WordCountContext';
 import UserLogin from './Componets/UserLogin';
 import { useState } from 'react';
 import Spinner from './Componets/Spinner.js';
-import ErrorModal from './Componets/ErrorModal';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ResultPage from './Componets/ResultPage';
+
+
 
 function App() {
-  const [formId, setFormId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); // Add an error state
 
   return (
     <>
       <WordCountProvider>
-        <Spinner loading={loading} />
-        {formId === null ? (
-          <UserLogin setFormId={setFormId} setLoading={setLoading} setError={setError} />
-          // <ErrorModal error={error} />
-        ) : (
-          <>
-            <HeaderDataTable />
-            <IndexDataTable formId={formId} setFormId={setFormId} setLoading={setLoading} setError={setError} />
-          </>
-        )}
+        <BrowserRouter>
+          <Spinner loading={loading} />
+          <Routes>
+            <Route exact path="/:id" element={<ResultPage setLoading={setLoading} />} />
+          </Routes>
+          {/* {formId === null ? (
+            <UserLogin setFormId={setFormId} setLoading={setLoading} setError={setError} />
+            // <ErrorModal error={error} />
+          ) : (
+            <>
+              <HeaderDataTable />
+              <IndexDataTable formId={formId} setFormId={setFormId} setLoading={setLoading} setError={setError} />
+            </>
+          )} */}
+        </BrowserRouter>
       </WordCountProvider>
     </>
   );

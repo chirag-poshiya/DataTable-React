@@ -39,7 +39,7 @@ export default function HeaderDataTable() {
     // pop-up modal end
 
     const { wordCount } = useWordCount();
-    const isDisabled = wordCount < 1;
+    const isDisabled = wordCount < 3;
 
 
     return (
