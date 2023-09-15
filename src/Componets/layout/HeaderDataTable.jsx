@@ -38,7 +38,7 @@ export default function HeaderDataTable() {
     };
     // pop-up modal end
 
-    const { wordCount } = useWordCount();
+    const { wordCount, recordCount } = useWordCount();
     const isDisabled = wordCount < 3;
 
 
@@ -103,7 +103,7 @@ export default function HeaderDataTable() {
                         <p className='text-[#343a40]'>Send Mandatory info</p>
                         <div className='flex items-center justify-center'>
                             <span className='text-[1rem] font-medium'>{wordCount}</span>
-                            <span className='text-[1rem] font-medium'>/5</span>
+                            <span className='text-[1rem] font-medium'>/{recordCount}</span>
                         </div>
                     </div>
                     <Button className='!bg-blue-500 text-[1.25rem] font-medium'>Open Tutorial</Button>

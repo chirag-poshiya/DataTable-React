@@ -123,7 +123,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const onRowEditComplete = (e) => {
       let _products = [...customers];
       let { newData, index } = e;
-      console.log(index, newData)
+
       _products[index] = newData;
 
       // setCustomers(_products);
@@ -150,7 +150,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const [tableData, setTableData] = useState([]);
    const [table1Data, setTable1Data] = useState([]);
    const [table2Data, setTable2Data] = useState([]);
-   const { updateWordCount, apiData } = useWordCount();
+   const { updateWordCount, updateRecordsCount, apiData } = useWordCount();
    let location = useLocation();
 
    const getData = () => {
@@ -160,15 +160,30 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
             .then((res) => {
                return res.data.table_data;
             })
-            .then((tblData) => {
+            .then( async (tblData) => {
                setTableData(tblData);
-               setTable1Data(tblData.filter(t => t.priority !== 1));
-               setTable2Data(tblData.filter(tb => tb.priority === 1));
-               setLoading(false);
-
-            }).catch((err) => {
+            // await updateRecordsCount(table1Data.length);
 
             })
+            // .then(() => {
+
+            //    setTable1Data(tableData.filter(t => t.priority !== 1));
+            //    // console.log(tableData)
+
+            // }).then(() => {
+            //    console.log('tableData')
+            //    // console.log(tableData)
+            //    setTable2Data(tableData.filter(tb => tb.priority === 1));
+
+            // }).then(() => {
+
+            //    setLoading(false);
+            //    // console.log('table1Datass')
+            //    // console.log(table1Data.length, table1Data, tblData);
+
+            // }).catch((err) => {
+
+            // })
             .finally(() => {
                setLoading(false); // Set loading to false when the data fetch is complete (including errors)
             });
@@ -176,7 +191,41 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
    }
    useEffect(() => {
-      console.log('object')
+      setTable1Data(tableData.filter(t => t.priority !== 1));
+      setTable2Data(tableData.filter(t => t.priority === 1));
+      updateRecordsCount(table1Data.length);
+      setLoading(false)
+   }, [tableData]);
+
+
+   // const getData = async () => {
+   //    if (formId !== null) {
+   //       setLoading(true);
+
+   //       try {
+   //          const response = await axios.get(`https://wmf-test.free.mockoapp.net/form/${formId}`);
+   //          const tblData = response.data.table_data;
+
+   //          setTableData(tblData);
+   //          updateRecordsCount(table1Data.length);
+   //          setTable1Data(tableData.filter(t => t.priority !== 1));
+   //          // console.log('tableData');
+   //          // console.log(tableData);
+   //          // console.log("table1Data");
+   //          // console.log(table1Data);
+   //          // console.log("table2Data");
+   //          // console.log(table2Data);
+   //          setTable2Data(tableData.filter(tb => tb.priority === 1));
+   //       } catch (error) {
+   //          // Handle errors here
+   //          console.error(error);
+   //       } finally {
+   //          setLoading(false);
+   //       }
+   //    }
+   // };
+   useEffect(() => {
+
       getData();
    }, [location]);
 
@@ -185,7 +234,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
 
    const [inputValue, setInputValue] = useState('');
-   const { wordCount } = useWordCount();
+   const { wordCount, recordCount } = useWordCount();
    const isDisabled = wordCount > 5;
 
 
@@ -224,6 +273,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
             }} />
       </>
    };
+
+   const functionArray = [exQtyBodyTemplate, exDateBodyTemplate, noteBodyTemplate]
 
    const handleInputChange = (e, id) => {
       setInputValue(e.target.value);
