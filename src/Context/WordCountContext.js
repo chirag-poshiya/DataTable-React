@@ -5,7 +5,7 @@ const WordCountContext = createContext();
 
 // Create a context provider
 export function WordCountProvider({ children }) {
-    const [wordCount, setWordCount] = useState([]);
+    const [wordCount, setWordCount] = useState(0);
     const [apiData, setApiData] = useState([]);
 
     const updateWordCount = (count) => {

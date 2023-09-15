@@ -2,13 +2,12 @@ import React, { useContext, useState } from 'react'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import axios from 'axios';
-// import { Link, NavLink } from 'react-router-dom';
-
+// import { NavLink, useLocation } from 'react-router-dom';
 import { useWordCount } from '../Context/WordCountContext';
 
 
 
-function UserLogin({ setFormId, setLoading }) {
+function UserLogin({ setFormId, setLoading, setError }) {
 
     const [inputId, setInputId] = useState('');
     // const [apiData, setApiData] = useState(null);
@@ -20,16 +19,18 @@ function UserLogin({ setFormId, setLoading }) {
         try {
             setLoading(true);
 
-            setFormId(inputId);
-            // Make an API request using Axios
-            // const response = await axios.get(`https://wmf-test.free.mockoapp.net/form/${inputId}`);
-            // const data = response.data;
+            // const requestData = {
+            //     id: inputId,
+            // };
+            // const response = await axios.post('https://wmf-test.free.mockoapp.net/form/', requestData);
+            // setApiData(response.data);
 
-            // // Update the apiData state with the response data
-            // setApiData(data);
-            
+
+            setFormId(inputId);
         } catch (error) {
             console.error('Error fetching data from API:', error);
+            setError(true);
+        } finally {
             setLoading(false);
         }
     };
@@ -56,13 +57,11 @@ function UserLogin({ setFormId, setLoading }) {
                                 placeholder='Form id'
                                 onChange={(e) => setInputId(e.target.value)}
                             />
-                            {/* <NavLink to="/indexDataTable"> */}
                             <Button
                                 label="Submit"
                                 className="!bg-blue-500 h-fit"
                                 onClick={handleSendClick}
                             />
-                            {/* </NavLink> */}
                         </div>
                     </form>
                 </div>
