@@ -118,13 +118,17 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       getData();
    }, [location]);
 
-
+   
+   
    // Edit row count
    const [inputValue, setInputValue] = useState('');
    const { wordCount, recordCount } = useWordCount();
-   const isDisabled = wordCount > 5;
+   // const isDisabled = wordCount > 5;
    const [postData, setPostData] = useState([]);
-
+   
+   useEffect(() => {
+      console.log('post effect', postData);
+   }, [postData]);
    const exQtyBodyTemplate = (options) => {
       // first input
       return <InputText
@@ -141,6 +145,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       // second input
       return <Calendar className='!border-0 calender-datatable'
          value={rowData.date}
+         readOnlyInput
          locale="es"
          onChange={(e) => {
             updateRecordCount(options.id)
@@ -153,7 +158,6 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       // third input
       return <>
          <InputText
-            // disabled={isDisabled}
             className='border-0 calender-datatable'
             onChange={(e) => {
                updateRecordCount(options.id)
@@ -175,36 +179,29 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       }
    }
    const updatePostData = async (field, val, id) => {
-      // console.log(field, val);
-      // console.log('postData first', postData);
-      
+      if(field === 'date'){
+         val =  new Date(val).toISOString(); 
+      }
       let curData = postData.filter(p => p.id === id);
-      console.log('curData length', curData.length, curData, postData)
-      
       if (curData.length) {
-         // console.log('present', curData, postData)
          let curData_ = postData.filter(p => p.id === id)
-         // let curData_ = curData
          .map(  (d) => {
             if(d.id === id){
-               // console.log('in map ', d, field, val)
                return  {...d, [field]: val}
             }
             return d;
          })
-         setPostData(curData_);
-         // console.log('after', curData_, postData)
-         // curData = {...curData, [field]:val}
+         const postData_ = postData.map( (np) => {
+            if(np.id === curData_[0].id){
+               return np = curData_[0];
+            }
+            return np;
+         })
+         setPostData(postData_);
       } else {
-         // console.log('else', postData)
-         let newCurData = { ...curData, id: id, [field]:val }
+         let newCurData = { ...curData, id: id, [field]:val };
          setPostData(postData => [...postData, newCurData]);
       }
-      
-
-      // console.log('curData out', postData);
-      
-      
    }
 
    return (
