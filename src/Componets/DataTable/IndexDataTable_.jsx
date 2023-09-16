@@ -13,13 +13,14 @@ import { useWordCount } from '../../Context/WordCountContext';
 import ActionRequir from '../ActionRequir';
 import NoActionRequir from '../NoActionRequir';
 import { useLocation } from 'react-router-dom';
+import { Dialog } from 'primereact/dialog';
 
 
 
 
 export default function CustomersDemo({ formId, setLoading, setError }) {
 
-   const [customers, setCustomers] = useState([]);
+      
    const [selectedCustomers, setSelectedCustomers] = useState([]);
    const [updatedProducts, setUpdatedProducts] = useState([]);
    const rowClass = (data) => {
@@ -53,7 +54,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const renderHeader = () => {
       return (
          <div className="w-full flex flex-wrap gap-2 justify-between items-center">
-            <h4 className="m-0 text-[1.5rem]">Customers</h4>
+            <h4 className="m-0 text-[1.5rem]">Data</h4>
          </div>
       );
    };
@@ -87,13 +88,15 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const [tableData, setTableData] = useState([]);
    const [table1Data, setTable1Data] = useState([]);
    const [table2Data, setTable2Data] = useState([]);
-   const { updateWordCount, updateRecordsCount, apiData } = useWordCount();
+   const { updateWordCount, updateRecordsCount, apiData, visible, setVisible } = useWordCount();
    let location = useLocation();
+   const baseurl = 'https://wmf-test.free.mockoapp.net';
+
 
    const getData = () => {
       if (formId !== null) {
          setLoading(true);
-         axios.get(`https://wmf-test.free.mockoapp.net/form/${formId}`)
+         axios.get(`${baseurl}/form/${formId}`)
             .then((res) => {
                return res.data.table_data;
             })
@@ -103,14 +106,18 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
             .finally(() => {
                setLoading(false);
             });
+        
       }
 
    }
 
+
    useEffect(() => {
-      setTable1Data(tableData.filter(t => t.priority !== 1));
-      setTable2Data(tableData.filter(t => t.priority === 1));
-      updateRecordsCount(table1Data.length);
+      if(tableData){
+         setTable1Data(tableData.filter(t => t.priority !== 1));
+         setTable2Data(tableData.filter(t => t.priority === 1));
+         updateRecordsCount(table1Data.length);
+      }
       setLoading(false)
    }, [tableData]);
 
@@ -118,16 +125,17 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       getData();
    }, [location]);
 
-   
-   
+
+
    // Edit row count
    const [inputValue, setInputValue] = useState('');
+   const [emailData, setEmailData] = useState('');
    const { wordCount, recordCount } = useWordCount();
    // const isDisabled = wordCount > 5;
    const [postData, setPostData] = useState([]);
-   
+
    useEffect(() => {
-      console.log('post effect', postData);
+      // console.log('post effect', postData);
    }, [postData]);
    const exQtyBodyTemplate = (options) => {
       // first input
@@ -179,31 +187,54 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       }
    }
    const updatePostData = async (field, val, id) => {
-      if(field === 'date'){
-         val =  new Date(val).toISOString(); 
+      if (field === 'date') {
+         val = new Date(val).toISOString();
       }
       let curData = postData.filter(p => p.id === id);
       if (curData.length) {
          let curData_ = postData.filter(p => p.id === id)
-         .map(  (d) => {
-            if(d.id === id){
-               return  {...d, [field]: val}
-            }
-            return d;
-         })
-         const postData_ = postData.map( (np) => {
-            if(np.id === curData_[0].id){
+            .map((d) => {
+               if (d.id === id) {
+                  return { ...d, [field]: val }
+               }
+               return d;
+            })
+         const postData_ = postData.map((np) => {
+            if (np.id === curData_[0].id) {
                return np = curData_[0];
             }
             return np;
          })
          setPostData(postData_);
       } else {
-         let newCurData = { ...curData, id: id, [field]:val };
+         let newCurData = { ...curData, id: id, [field]: val };
          setPostData(postData => [...postData, newCurData]);
       }
    }
 
+   const submitData =  (e) => {
+      // e.preventDefault();
+      setVisible(false);
+      if (formId !== null) {
+         setLoading(true);
+         const data = {
+            "form-id": formId,
+            "supplier_form_editor": emailData,
+            "table_data": postData
+         }
+         axios.post(`${baseurl}/write_supplier_response_data`, data)
+            .then((res) => {
+               console.log(res)
+            })
+            .then( (tblData) => {
+               setTableData(tblData);
+            })
+            .finally(() => {
+               setLoading(false);
+            });
+      }
+   }
+   
    return (
       <>
          <div>
@@ -218,7 +249,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-                                 emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+                                 emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
                                  <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '129px' }} />
                                  <Column editor={(options) => priceEditor(options)} className="whitespace-nowrap" header="Exp Quanity" body={exQtyBodyTemplate} />
                                  <Column editor={(options) => textEditor(options)} className="whitespace-nowrap" header="Exp delivery date" body={exDateBodyTemplate} />
@@ -252,7 +283,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
-                                 emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+                                 emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
                                  <Column className="whitespace-nowrap" field="part_number" header="Part Number" style={{ minWidth: '129px' }} />
                                  <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
                                  <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" style={{ minWidth: '114px' }} />
@@ -281,6 +312,21 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                      }
                   </div>
                </div>
+            </div>
+            <div className="card flex justify-content-center">
+               <Dialog header="Enter Your Email" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+                  <form action="" onSubmit={submitData}  className='p-3 max-w-[80%] mx-auto' >
+                     <div>
+                        <input type='email' onChange={ (e) => { setEmailData(e.target.value)}} className='p-[10px] text-[16px] font-normal w-full focus:outline-0 border border-[#f1f1f1] rounded-sm' placeholder='Enter Email' required />
+                     </div>
+
+                     <div className='flex items-center justify-start gap-[.625rem] py-[10px]'>
+                        <input type="checkbox"   id="confim" required />
+                        <label htmlFor='confim' className='text-[14px] font-normal '>confirmed</label>
+                     </div>
+                     <button type='submit' className='w-full mt-2  bg-[#3b82f6] text-white font-medium py-[6px] px-[6px] rounded-md'>Send</button>
+                  </form>
+               </Dialog>
             </div>
          </div>
 

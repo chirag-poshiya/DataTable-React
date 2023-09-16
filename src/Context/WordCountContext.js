@@ -8,6 +8,7 @@ export function WordCountProvider({ children }) {
     const [wordCount, setWordCount] = useState(0);
     const [recordCount, setRecordCount] = useState(0);
     const [apiData, setApiData] = useState([]);
+    const [visible, setVisible] = useState(false);
 
     const updateWordCount = (count) => {
         setWordCount(count);
@@ -17,7 +18,7 @@ export function WordCountProvider({ children }) {
     };
 
     return (
-        <WordCountContext.Provider value={{ wordCount, updateWordCount , apiData , setApiData, recordCount,updateRecordsCount }}>
+        <WordCountContext.Provider value={{ wordCount, updateWordCount , apiData , setApiData, recordCount,updateRecordsCount , visible, setVisible }}>
             {children}
         </WordCountContext.Provider>
     );
