@@ -299,14 +299,14 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                   </div>
                </div>
             </div>
-            <div className="card flex justify-content-center">
-               <Dialog header="Enter Your Email" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
-                  <form action="" onSubmit={submitData}  className='p-3 max-w-[80%] mx-auto' >
+            <div className="card flex justify-content-center mail-card">
+               <Dialog className='' header="Enter Your Email" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+                  <form action="" onSubmit={submitData}  className='pt-3 pb-[1.5rem] mx-auto' >
                      <div>
                         <input type='email' onChange={ (e) => { setEmailData(e.target.value)}} className='p-[10px] text-[16px] font-normal w-full focus:outline-0 border border-[#f1f1f1] rounded-sm' placeholder='Enter Email' required />
                      </div>
 
-                     <div className='flex items-center justify-start gap-[.625rem] py-[10px]'>
+                     <div className='flex items-center justify-start gap-[.625rem] pt-[10px] '>
                         <input type="checkbox"   id="confim" required />
                         <label htmlFor='confim' className='text-[14px] font-normal '>confirmed</label>
                      </div>
