@@ -107,8 +107,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                await setTableData(tblData);
                await setTable1Data(tableData.filter(t => t.priority !== 1));
                await setTable2Data(tableData.filter(t => t.priority === 1));
-               console.log('CTOU..', table1Data.length, table1Data)
-               await updateRecordsCount(table1Data.length);
+               console.log('..CTOU..', table1Data.length, table1Data)
+               await updateRecordsCount(tableData.length);
             })
             .finally(() => {
                setLoading(false);
