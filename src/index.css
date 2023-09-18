@@ -39,6 +39,7 @@ body {
 .p-button {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
+  transition: all .4s;
 }
 
 .p-inputtext {
@@ -161,7 +162,7 @@ body {
 
 .open-modal-btn .p-button {
   background: unset !important;
-  border-color: #e5e7eb;
+  border-color: #e5e7eb !important;
   padding: 8px;
 }
 
@@ -178,12 +179,14 @@ body {
 }
 
 #pr_id_2_content .p-button,
-.user-login .p-button {
+.user-login .p-button,
+.p-button {
   background: #3b82f6 !important;
   border-color: #3b82f6 !important;
 }
 
 #pr_id_2_content .p-button:focus,
+.p-button:focus,
 .user-login .p-button:focus {
   box-shadow: unset !important;
 }
@@ -212,6 +215,7 @@ body {
 .p-checkbox .p-checkbox-box.p-highlight {
   border-color: #3b82f6 !important;
   background: #3b82f6 !important;
+  transition: all .4s;
 
 }
 
@@ -219,6 +223,18 @@ body {
   text-align: center !important;
 }
 
+.p-dialog .p-dialog-content {
+  padding-bottom: 0 !important;
+}
+
+.p-dialog .p-dialog-footer button {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.p-dialog .p-dialog-footer button:hover {
+  background: #2d77f0 !important;
+}
 
 /* spinner */
 .spinner-main {
