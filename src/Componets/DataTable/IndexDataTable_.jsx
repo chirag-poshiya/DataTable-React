@@ -250,26 +250,19 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
                                  emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
+                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '114px' }} />
                                  <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '129px' }} />
+                                 <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '242px' }} />
+                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '229px' }} />
+                                 <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '226px' }} />
+                                 <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '90px' }} />
                                  <Column editor={(options) => priceEditor(options)} className="whitespace-nowrap" header="Exp Quanity" body={exQtyBodyTemplate} />
                                  <Column editor={(options) => textEditor(options)} className="whitespace-nowrap" header="Exp delivery date" body={exDateBodyTemplate} />
                                  <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '80px', textAlign: 'center' }} body={noteBodyTemplate} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
-                                 <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
-                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '114px' }} />
-                                 <Column className="whitespace-nowrap" field="plant_name" header="Plant Name" sortable style={{ minWidth: '217px' }} />
-                                 <Column className="whitespace-nowrap" field="supplier_sap_code" header="Sap Code" sortable style={{ minWidth: '117px' }} />
-                                 <Column className="whitespace-nowrap" field="supplier_name" header="Supplier Name" sortable dataType="date" style={{ minWidth: '324px' }} />
-                                 <Column className="whitespace-nowrap" field="last_receipt_packlist" header="Last Receipt Packlist" sortable dataType="date" style={{ minWidth: '184px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '229px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '242px' }} />
-                                 <Column className="whitespace-nowrap" field="firm_qty" header="Firm Qty" sortable dataType="date" style={{ minWidth: '97px' }} />
-                                 <Column className="whitespace-nowrap" field="w" header="W" sortable dataType="date" style={{ minWidth: '84px' }} />
                                  <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '84px' }} />
                                  <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '84px' }} />
                                  <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '69px' }} />
-                                 <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '226px' }} />
-                                 <Column className="whitespace-nowrap" field="current_week_no" header="Current Week NO" sortable dataType="date" style={{ minWidth: '164px' }} />
-                                 <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '90px' }} />
+                                 <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
                                  <Column className="whitespace-nowrap hidden" field="priority" header="Priority" sortable dataType="date" style={{ minWidth: '104px' }} />
                               </DataTable>
                            </div>
@@ -284,27 +277,20 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
                                  emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-                                 <Column className="whitespace-nowrap" field="part_number" header="Part Number" style={{ minWidth: '129px' }} />
-                                 <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
-                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" style={{ minWidth: '114px' }} />
-                                 <Column className="whitespace-nowrap" field="plant_name" header="Plant Name" sortable style={{ minWidth: '217px' }} />
-                                 <Column className="whitespace-nowrap" field="supplier_sap_code" header="Sap Code" sortable style={{ minWidth: '117px' }} />
-                                 <Column className="whitespace-nowrap" field="supplier_name" header="Supplier Name" sortable dataType="date" style={{ minWidth: '324px' }} />
-                                 <Column className="whitespace-nowrap" field="last_receipt_packlist" header="Last Receipt Packlist" sortable dataType="date" style={{ minWidth: '184px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '229px' }} />
+                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '114px' }} />
+                                 <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '129px' }} />
                                  <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '242px' }} />
-                                 <Column className="whitespace-nowrap" field="firm_qty" header="Firm Qty" sortable dataType="date" style={{ minWidth: '97px' }} />
-                                 <Column className="whitespace-nowrap" field="w" header="W" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '69px' }} />
+                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '229px' }} />
                                  <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '226px' }} />
-                                 <Column className="whitespace-nowrap" field="current_week_no" header="Current Week NO" sortable dataType="date" style={{ minWidth: '164px' }} />
                                  <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '90px' }} />
-                                 <Column className="whitespace-nowrap hidden" field="priority" header="Priority" sortable dataType="date" style={{ minWidth: '104px' }} />
                                  <Column className="whitespace-nowrap" field="" editor={(options) => priceEditor(options)} body={disableBodyTemplate} />
                                  <Column className="whitespace-nowrap" field="" editor={(options) => textEditor(options)} showFilterMatchModes={false} body={desableBodyTemplate} />
                                  <Column className="whitespace-nowrap" field="" editor={(options) => statusEditor(options)} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate} />
+                                 <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '84px' }} />
+                                 <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '84px' }} />
+                                 <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '69px' }} />
+                                 <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
+                                 <Column className="whitespace-nowrap hidden" field="priority" header="Priority" sortable dataType="date" style={{ minWidth: '104px' }} />
                               </DataTable>
                            </div>
                         </div>
