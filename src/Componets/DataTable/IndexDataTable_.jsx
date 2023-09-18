@@ -101,6 +101,9 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                return res.data.table_data;
             })
             .then(async (tblData) => {
+               console.log('==========tblData')
+               console.log(tblData)
+               console.log('tblData=============')
                setTableData(tblData);
             })
             .finally(() => {
