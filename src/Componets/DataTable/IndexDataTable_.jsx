@@ -113,9 +113,11 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
 
    useEffect(() => {
+      console.log('Context tbl data')
       if(tableData){
          setTable1Data(tableData.filter(t => t.priority !== 1));
          setTable2Data(tableData.filter(t => t.priority === 1));
+         console.log('CTOU', table1Data.length, table1Data)
          updateRecordsCount(table1Data.length);
       }
       setLoading(false)
