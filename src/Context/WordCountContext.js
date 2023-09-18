@@ -14,7 +14,7 @@ export function WordCountProvider({ children }) {
         setWordCount(count);
     };
     const updateRecordsCount = (count) => {
-        console.log('RCU...')
+        console.log('.RCU...', count)
         setRecordCount(count);
     };
 
