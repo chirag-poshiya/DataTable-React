@@ -104,11 +104,11 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                console.log('==========tblData')
                console.log(tblData)
                console.log('tblData=============')
-               setTableData(tblData);
-               setTable1Data(tableData.filter(t => t.priority !== 1));
-               setTable2Data(tableData.filter(t => t.priority === 1));
+               await setTableData(tblData);
+               await setTable1Data(tableData.filter(t => t.priority !== 1));
+               await setTable2Data(tableData.filter(t => t.priority === 1));
                console.log('CTOU..', table1Data.length, table1Data)
-               updateRecordsCount(table1Data.length);
+               await updateRecordsCount(table1Data.length);
             })
             .finally(() => {
                setLoading(false);
