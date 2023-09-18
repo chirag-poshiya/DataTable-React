@@ -199,6 +199,15 @@ body {
   border-bottom: none !important;
 }
 
+.mail-card .p-dialog {
+  padding: 0px !important;
+}
+
+.mail-card .p-dialog .p-dialog-content {
+  padding: 0px;
+}
+
+
 .field-checkbox>label,
 .field-radiobutton>label {
   margin-left: 10px;
