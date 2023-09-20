@@ -198,11 +198,11 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const updateRecordCount = (id, field) => {
       console.log('updateRecords');
       console.log(postData);
-      // const index = updatedProducts.findIndex(object => object === id);
-      // if (index === -1) {
-      //    setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
-      //    updateWordCount(wordCount + 1);
-      // }
+      const index = updatedProducts.findIndex(object => object === id);
+      if (index === -1) {
+         setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
+         updateWordCount(wordCount + 1);
+      }
       // if(field == 'date'){
       //    //field2
       //    console.log(field);
