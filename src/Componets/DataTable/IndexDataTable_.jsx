@@ -4,6 +4,7 @@ import { FilterMatchMode, FilterOperator, addLocale } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 import { Calendar } from 'primereact/calendar';
 import '../../../src/index.css'
 import 'primeicons/primeicons.css';
@@ -38,7 +39,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       today: 'Hoy',
-      clear: 'Limpiar'
+      clear: 'Limpiar',
    });
    const [filters, setFilters] = useState({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -48,7 +49,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
       balance: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
       status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-      activity: { value: null, matchMode: FilterMatchMode.BETWEEN }
+      activity: { value: null, matchMode: FilterMatchMode.BETWEEN },
    });
 
    const renderHeader = () => {
@@ -78,7 +79,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    };
 
    const priceEditor = (options) => {
-      return <InputText className='calender-datatable' value={options.value} onValueChange={(e) => options.editorCallback(e.value)} />;
+      return <InputNumber className='calender-datatable' value={options.value} onValueChange={(e) => options.editorCallback(e.value)} />;
    };
 
    const header = renderHeader();
@@ -142,19 +143,26 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const { wordCount, recordCount } = useWordCount();
    // const isDisabled = wordCount > 5;
    const [postData, setPostData] = useState([]);
-
+   const [value1, setValue1] = useState('');
+   const today = new Date();
    useEffect(() => {
       // console.log('post effect', postData);
    }, [postData]);
+
    const exQtyBodyTemplate = (options) => {
       // first input
-      return <InputText
-         aria-disabled='false'
+      return <InputNumber
          className='border-0 calender-datatable disabled'
-         onChange={(e) => {
+         onValueChange={(e) => {
+            setValue1(e.value);
             updateRecordCount(options.id);
             updatePostData('qty', e.target.value, options.id);
-         }}
+         }
+         }
+      // onChange={(e) => {
+      //    updateRecordCount(options.id);
+      //    updatePostData('qty', e.target.value, options.id);
+      // }}
       />;
    };
 
@@ -163,6 +171,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       return <Calendar className='!border-0 calender-datatable'
          value={rowData.date}
          readOnlyInput
+         minDate={today}
          locale="es"
          onChange={(e) => {
             updateRecordCount(options.id)
@@ -286,18 +295,18 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
                                  emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '114px' }} />
-                                 <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '129px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '242px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '229px' }} />
-                                 <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '226px' }} />
-                                 <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '90px' }} />
+                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '137px' }} />
+                                 <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '153px' }} />
+                                 <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '266px' }} />
+                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '253px' }} />
+                                 <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '251px' }} />
+                                 <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '114px' }} />
                                  <Column className="whitespace-nowrap" field="" editor={(options) => priceEditor(options)} body={disableBodyTemplate} />
                                  <Column className="whitespace-nowrap" field="" editor={(options) => textEditor(options)} showFilterMatchModes={false} body={desableBodyTemplate} />
                                  <Column className="whitespace-nowrap" field="" editor={(options) => statusEditor(options)} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate} />
-                                 <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '69px' }} />
+                                 <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '93px' }} />
+                                 <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '93px' }} />
+                                 <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '93px' }} />
                                  <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
                                  <Column className="whitespace-nowrap hidden" field="priority" header="Priority" sortable dataType="date" style={{ minWidth: '104px' }} />
                               </DataTable>
