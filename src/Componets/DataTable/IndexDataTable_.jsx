@@ -24,6 +24,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
    const [selectedCustomers, setSelectedCustomers] = useState([]);
    const [updatedProducts, setUpdatedProducts] = useState([]);
+   const [updatedProducts2, setUpdatedProducts2] = useState([]);
    const rowClass = (data) => {
       return {
          'bg-yellow-3': data.priority === 3,
@@ -102,13 +103,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                return res.data.table_data;
             })
             .then(async (tblData) => {
-               console.log('==========tblData')
-               console.log(tblData)
-               console.log('tblData=============')
-               await setTableData(tblData);
-               // await setTable1Data(tableData.filter(t => t.priority !== 1));
-               // await setTable2Data(tableData.filter(t => t.priority === 1));
-               // console.log('..CTOU..', table1Data.length, table1Data)
+               setTableData(tblData);
                await updateRecordsCount(tblData.length);
             })
             .finally(() => {
@@ -121,14 +116,13 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
 
    useEffect(() => {
-      console.log('Context tbl data')
       if (tableData) {
          setTable1Data(tableData.filter(t => t.priority !== 1));
          setTable2Data(tableData.filter(t => t.priority === 1));
-         console.log('..CTOU>> ', tableData.filter(t => t.priority !== 1).length, table1Data)
          updateRecordsCount(tableData.filter(t => t.priority !== 1).length);
       }
       setLoading(false)
+      console.log('update state', postData)
    }, [tableData]);
 
    useEffect(() => {
@@ -145,6 +139,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const [postData, setPostData] = useState([]);
    const [value1, setValue1] = useState('');
    const today = new Date();
+
+
    useEffect(() => {
       // console.log('post effect', postData);
    }, [postData]);
@@ -153,10 +149,12 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       // first input
       return <InputNumber
          className='border-0 calender-datatable disabled'
-         onValueChange={(e) => {
+         useGrouping={false}
+         onChange={async (e) => {
+            // console.log(e.value)
             setValue1(e.value);
-            updateRecordCount(options.id);
-            updatePostData('qty', e.target.value, options.id);
+            await updatePostData('qty', e.value, options.id);
+            updateRecordCount(options.id, 'qty');
          }
          }
       // onChange={(e) => {
@@ -173,9 +171,9 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          readOnlyInput
          minDate={today}
          locale="es"
-         onChange={(e) => {
-            updateRecordCount(options.id)
-            updatePostData('date', e.target.value, options.id);
+         onChange={async (e) => {
+            await updatePostData('date', e.target.value, options.id);
+            updateRecordCount(options.id, 'date')
          }}
       />;
    };
@@ -185,26 +183,38 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       return <>
          <InputText
             className='border-0 calender-datatable'
-            onChange={(e) => {
-               updateRecordCount(options.id)
-               updatePostData('note', e.target.value, options.id);
+            onChange={async (e) => {
+               await updatePostData('note', e.target.value, options.id);
+               updateRecordCount(options.id, 'note')
             }} />
       </>
    };
 
    const handleInputChange = (e, id) => {
       setInputValue(e.target.value);
-      updateRecordCount(id);
+      updateRecordCount(id, '');
    };
 
-   const updateRecordCount = (id) => {
-      const index = updatedProducts.findIndex(object => object === id);
-      if (index === -1) {
-         setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
-         updateWordCount(wordCount + 1);
-      }
+   const updateRecordCount = (id, field) => {
+      console.log('updateRecords');
+      console.log(postData);
+      // const index = updatedProducts.findIndex(object => object === id);
+      // if (index === -1) {
+      //    setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
+      //    updateWordCount(wordCount + 1);
+      // }
+      // if(field == 'date'){
+      //    //field2
+      //    console.log(field);
+      //    const index2 = updatedProducts2.findIndex(object => object === id);
+      //    if (index2 === -1) {
+      //       setUpdatedProducts2(updatedProducts2 => [...updatedProducts2, id]);
+      //    }
+      // }
+
    }
    const updatePostData = async (field, val, id) => {
+      console.log(field, val, id);
       if (field === 'date') {
          val = new Date(val).toISOString();
       }
@@ -226,7 +236,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          setPostData(postData_);
       } else {
          let newCurData = { ...curData, id: id, [field]: val };
-         setPostData(postData => [...postData, newCurData]);
+         setPostData([...postData, newCurData]);
+         console.log('postData', postData);
       }
    }
 
