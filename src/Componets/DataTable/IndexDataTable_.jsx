@@ -124,7 +124,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       if (tableData) {
          setTable1Data(tableData.filter(t => t.priority !== 1));
          setTable2Data(tableData.filter(t => t.priority === 1));
-         console.log('CTOU', tableData.filter(t => t.priority !== 1).length, table1Data)
+         console.log('..CTOU.> ', tableData.filter(t => t.priority !== 1).length, table1Data)
          updateRecordsCount(table1Data.length);
       }
       setLoading(false)
