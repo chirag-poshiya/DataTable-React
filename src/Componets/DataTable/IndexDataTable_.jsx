@@ -24,6 +24,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
    const [selectedCustomers, setSelectedCustomers] = useState([]);
    const [updatedProducts, setUpdatedProducts] = useState([]);
+   const [updatedQty, setUpdatedQty] = useState([]);
+   const [updatedDate, setUpdatedDate] = useState([]);
    const [updatedProducts2, setUpdatedProducts2] = useState([]);
    const rowClass = (data) => {
       return {
@@ -139,7 +141,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const [postData, setPostData] = useState([]);
    const [value1, setValue1] = useState('');
    const today = new Date();
-
+   const varQty = [];
+   let varDate = [];
 
 
    useEffect(() => {
@@ -192,31 +195,48 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       updateRecordCount(id, '');
    };
 
-   const updateRecordCount = (id, field, exQtyBodyTemplate, exDateBodyTemplate) => {
-      console.log('updateRecords');
-      console.log(postData);
-      const index = updatedProducts.findIndex(object => object === id);
-      if (index === -1) {
-         setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
-         updateWordCount(wordCount + 1);
+   const updateRecordCount = async (id, field) => {
+      // console.log('updateRecords');
+      // console.log(postData);
+      let qty = 0;
+      let date = 0;
+      
+      if (field == 'qty') {
+         // field1
+         // console.log(field, 'field1');
+         const indexQty =varQty.findIndex(object => object === id);
+         if (indexQty === -1) {
+            varQty.push(id, 'aasas')
+            
+         }
       }
-      // if (field == 'date') {
-      //    // field2
-      //    console.log(field, 'field');
-      //    const index2 = updatedProducts2.findIndex(object => object === id);
-      //    if (index2 === -1) {
-      //       setUpdatedProducts2(updatedProducts2 => [...updatedProducts2, id]);
-      //    }
-      // }
-      // if (exQtyBodyTemplate && exDateBodyTemplate) {
-      //    updateWordCount(1);
-      // } else {
-      //    updateWordCount(0);
-      // }
+      if (field == 'date') {
+         // field2
+         // console.log(field, 'field2');
+         const indexDate = varDate.findIndex(object => object === id);
+         console.log('indexDate', indexDate);
+         if (indexDate === -1) {
+            // await Promise.resolve(setUpdatedDate(setUpdatedDate => [...setUpdatedDate, id]));
+            varDate.push(id);
+         }
+      }
+      
+      // return true
+      const index = updatedProducts.findIndex(object => object === id);
+      const index2 = varQty.findIndex(object2 => object2 === id);
+      const index3 = varDate.findIndex(object3 => object3 === id);
+      
+      console.log('qty date', index2, index3, varQty, varDate);
+      if(index2 && index3){
 
+         if (index === -1) {
+            setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
+            updateWordCount(wordCount + 1);
+         }
+      }
    }
    const updatePostData = async (field, val, id) => {
-      console.log(field, val, id);
+      // console.log(field, val, id);
       if (field === 'date') {
          val = new Date(val).toISOString();
       }
@@ -239,7 +259,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       } else {
          let newCurData = { ...curData, id: id, [field]: val };
          setPostData([...postData, newCurData]);
-         console.log('postData', postData);
+         // console.log('postData', postData);
       }
    }
 
