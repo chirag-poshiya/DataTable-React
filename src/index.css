@@ -309,6 +309,13 @@ body {
     font-size: 13px !important;
     padding: 9px !important;
   }
+  .p-datatable .p-datatable-tbody>tr>td{
+    padding: 0 9px !important;
+  }
+  .p-icon {
+    width: 13px !important;
+    height: 13px !important;
+  }
 
 }
 
@@ -325,5 +332,12 @@ body {
   .p-datatable .p-datatable-tbody>tr>td {
     font-size: 11px !important;
     padding: 5px !important;
+  }
+  .p-datatable .p-datatable-tbody>tr>td{
+    padding: 0 5px !important;
+  }
+  .p-icon {
+    width: 10px !important;
+    height: 10px !important;
   }
 }
