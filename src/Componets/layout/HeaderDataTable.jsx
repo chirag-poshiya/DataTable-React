@@ -82,7 +82,7 @@ export default function HeaderDataTable() {
 
                     </div>
                     <div className='p-2 border border-[#4472c4] rounded-lg flex gap-3 hover:border-[#cbcccf]'>
-                        <p className='text-[#4472c4]'>Send Mandatory info</p>
+                        <p className='text-[1rem] text-[#4472c4]'>Send Mandatory info</p>
                         <div className='flex items-center justify-center'>
                             <span className='text-[1rem] font-medium text-[#4472c4]'>{wordCount}</span>
                             <span className='text-[1rem] font-medium text-[#4472c4]'>/{recordCount}</span>

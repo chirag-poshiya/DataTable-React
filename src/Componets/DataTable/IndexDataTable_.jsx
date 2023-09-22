@@ -122,7 +122,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          updateRecordsCount(tableData.filter(t => t.priority !== 1).length);
       }
       setLoading(false)
-      console.log('update state', postData)
+      // console.log('update state', postData)
    }, [tableData]);
 
    useEffect(() => {
@@ -141,6 +141,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const today = new Date();
 
 
+
    useEffect(() => {
       // console.log('post effect', postData);
    }, [postData]);
@@ -148,7 +149,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const exQtyBodyTemplate = (options) => {
       // first input
       return <InputNumber
-         className='border-0 calender-datatable disabled w-[100px]'
+         className='border-0 calender-datatable disabled xl:w-[100px]'
          useGrouping={false}
          onChange={async (e) => {
             // console.log(e.value)
@@ -191,7 +192,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       updateRecordCount(id, '');
    };
 
-   const updateRecordCount = (id, field) => {
+   const updateRecordCount = (id, field, exQtyBodyTemplate, exDateBodyTemplate) => {
       console.log('updateRecords');
       console.log(postData);
       const index = updatedProducts.findIndex(object => object === id);
@@ -199,14 +200,19 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
          updateWordCount(wordCount + 1);
       }
-      if (field == 'date') {
-         //field2
-         console.log(field);
-         const index2 = updatedProducts2.findIndex(object => object === id);
-         if (index2 === -1) {
-            setUpdatedProducts2(updatedProducts2 => [...updatedProducts2, id]);
-         }
-      }
+      // if (field == 'date') {
+      //    // field2
+      //    console.log(field, 'field');
+      //    const index2 = updatedProducts2.findIndex(object => object === id);
+      //    if (index2 === -1) {
+      //       setUpdatedProducts2(updatedProducts2 => [...updatedProducts2, id]);
+      //    }
+      // }
+      // if (exQtyBodyTemplate && exDateBodyTemplate) {
+      //    updateWordCount(1);
+      // } else {
+      //    updateWordCount(0);
+      // }
 
    }
    const updatePostData = async (field, val, id) => {
@@ -267,9 +273,9 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                <div className='border-t'>
                   <div className=''>
                      {table1Data &&
-                        <div className='flex gap-4 w-full mt-[.625rem] px-[1.875rem]'>
+                        <div className='flex xl:gap-4 gap-3 w-full mt-[.625rem] xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem]'>
                            <ActionRequir />
-                           <div className='w-[calc(100%_-_6.875rem)]'>
+                           <div className='xl:w-[calc(100%_-_116px)] w-[calc(100%_-_92px)]'>
                               <DataTable id="first-table" rowClassName={rowClass} editMode="row" value={table1Data} header={header}
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
@@ -283,7 +289,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                                  <Column className="" field="balance" header="Balance" sortable dataType="date" />
                                  <Column editor={(options) => priceEditor(options)} className="" header="Exp Quanity" body={exQtyBodyTemplate} />
                                  <Column editor={(options) => textEditor(options)} className="" header="Exp delivery date" body={exDateBodyTemplate} />
-                                 <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{  textAlign: 'center' }} body={noteBodyTemplate} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
+                                 <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ textAlign: 'center' }} body={noteBodyTemplate} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
                                  <Column className="" field="w_plus_1" header="W+1" sortable dataType="date" />
                                  <Column className="" field="w_plus_2" header="W+2" sortable dataType="date" />
                                  <Column className="" field="w_plus_3" header="W+3" sortable dataType="date" />
@@ -294,9 +300,9 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                         </div>
                      }
                      {table2Data &&
-                        <div className='flex gap-4 w-full px-[1.875rem]'>
+                        <div className='flex xl:gap-4 gap-3 w-full xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem]'>
                            <NoActionRequir />
-                           <div className='w-[calc(100%_-_6.875rem)]'>
+                           <div className='xl:w-[calc(100%_-_116px)] w-[calc(100%_-_92px)]'>
                               <DataTable id="second-table" rowClassName={rowClass} editMode="row" value={table2Data}
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}

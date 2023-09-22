@@ -49,6 +49,7 @@ body {
   padding-bottom: 8px !important;
   margin: 5px 0 !important;
   width: 100px !important;
+  font-size: unset !important;
 }
 
 .user-login .p-inputtext {
@@ -290,5 +291,39 @@ body {
 @keyframes spin {
   to {
     transform: rotate(1turn);
+  }
+}
+
+
+@media (max-width: 1440px) {
+  body {
+    font-size: 13px !important;
+
+  }
+
+  .p-inputtext,
+  .calender-datatable .p-inputtext,
+  #first-table .p-datatable-thead>tr>th,
+  #second-table .p-datatable-thead>tr>th,
+  .p-datatable .p-datatable-tbody>tr>td {
+    font-size: 13px !important;
+    padding: 9px !important;
+  }
+
+}
+
+@media (max-width: 1220px) {
+  body {
+    font-size: 11px !important;
+
+  }
+
+  .p-inputtext,
+  .calender-datatable .p-inputtext,
+  #first-table .p-datatable-thead>tr>th,
+  #second-table .p-datatable-thead>tr>th,
+  .p-datatable .p-datatable-tbody>tr>td {
+    font-size: 11px !important;
+    padding: 5px !important;
   }
 }
