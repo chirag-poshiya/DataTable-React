@@ -16,11 +16,8 @@ import NoActionRequir from '../NoActionRequir';
 import { useLocation } from 'react-router-dom';
 import { Dialog } from 'primereact/dialog';
 
-let varQty = [];
-let varDate = [];
-let index = -1;
-let index2 = -1;
-let index3 = -1;
+
+
 
 export default function CustomersDemo({ formId, setLoading, setError }) {
 
@@ -36,7 +33,6 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          '': data.priority === 1,
       };
    };
-
 
    addLocale('es', {
       firstDayOfWeek: 1,
@@ -145,6 +141,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const [postData, setPostData] = useState([]);
    const [value1, setValue1] = useState('');
    const today = new Date();
+   const [varQty, setVarQty] = useState([]);
+   const [varDate, setVarDate] = useState([]);
 
 
    useEffect(() => {
@@ -157,10 +155,10 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          className='border-0 calender-datatable disabled xl:w-[100px]'
          useGrouping={false}
          onChange={async (e) => {
-            // console.log(e.value)
+            console.log(e.value, options.id, varQty)
             setValue1(e.value);
             await updatePostData('qty', e.value, options.id);
-            updateRecordCount(options.id, 'qty');
+            updateFieldsValue(options.id, 'qty')
          }
          }
       />;
@@ -175,7 +173,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          locale="es"
          onChange={async (e) => {
             await updatePostData('date', e.target.value, options.id);
-            updateRecordCount(options.id, 'date')
+            updateFieldsValue(options.id, 'date')
+
          }}
       />;
    };
@@ -197,48 +196,45 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       updateRecordCount(id, '');
    };
 
-  
-   const updateRecordCount = async (id, field) => {
-      console.log('updateRecords', varQty);
+   const updateFieldsValue = async (id, fieldName) => {
+      if (fieldName === 'qty') {
+         await setVarQty(arr => [...new Set([...arr, id])]);
+      }
+      if (fieldName === 'date') {
+         await setVarDate((prevVarDate) => {
+            console.log(prevVarDate)
+            return [...new Set([...prevVarDate, id])]
+         });
+      }
+      console.log(varQty)
+      updateRecordCount(id,)
+
+   }
+
+   const updateRecordCount = async (id) => {
+      // console.log('updateRecords');
       // console.log(postData);
       let qty = 0;
       let date = 0;
 
-      if (field == 'qty') {
-         // field1
-         // console.log(field, 'field1');
-         const indexQty = varQty.findIndex(object => object === id);
-         if (indexQty === -1) {
-            varQty.push(id)
-
-         }
-      }
-      if (field == 'date') {
-         // field2
-         // console.log(field, 'field2');
-         const indexDate = varDate.findIndex(object => object === id);
-         console.log('indexDate', indexDate);
-         if (indexDate === -1) {
-            // await Promise.resolve(setUpdatedDate(setUpdatedDate => [...setUpdatedDate, id]));
-            varDate.push(id);
-         }
-      }
-
       // return true
-      
-       index = updatedProducts.findIndex(object => object === id);
-       index2 = varQty.findIndex(object2 => object2 === id);
-       index3 = varDate.findIndex(object3 => object3 === id);
-      console.log('qty date', index2, index3, varQty, varDate);
-      if (index2 >= 0 && index3 >= 0) {
-         console.log('index', index)
-         console.log('index2', index2)
-         console.log('index3', index3)
-         if (index === -1) {
-            setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
-            updateWordCount(wordCount + 1);
-         }
+      const productIndex = updatedProducts.findIndex(object => object === id);
+      const qtyIndex = varQty.findIndex(object => object === id);
+      const dateIndex = varDate.findIndex(object => object === id);
+
+      console.log('varQty', varQty, qtyIndex)
+      // console.log('varDate', varDate, dateIndex)
+      // console.groupEnd('start')
+      if (qtyIndex === 0 && dateIndex === 0) {
+         updateWordCount(wordCount + 1);
       }
+      if (productIndex === -1) {
+         setUpdatedProducts(updatedProducts => [...new Set([...updatedProducts, id])]);
+         updateWordCount(wordCount + 1);
+      }
+      console.log('qtyIndex', qtyIndex, 'qtyIndex')
+      console.log('dateIndex', dateIndex, 'dateIndex')
+      console.log('productIndex', productIndex, 'productIndex')
    }
    const updatePostData = async (field, val, id) => {
       // console.log(field, val, id);

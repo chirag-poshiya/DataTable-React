@@ -19,7 +19,7 @@ body {
   /* background-color: white !important; */
   /* border: 1px solid #ced4da !important; */
   border-radius: 6px;
-  width: 100px !important;
+  width: 150px !important;
 }
 
 
@@ -48,7 +48,7 @@ body {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
   margin: 5px 0 !important;
-  width: 100px !important;
+  width: 150px !important;
   font-size: unset !important;
 }
 
@@ -309,12 +309,22 @@ body {
     font-size: 13px !important;
     padding: 9px !important;
   }
-  .p-datatable .p-datatable-tbody>tr>td{
+
+  .p-datatable .p-datatable-tbody>tr>td {
     padding: 0 9px !important;
   }
+
   .p-icon {
     width: 13px !important;
     height: 13px !important;
+  }
+
+  .calender-datatable {
+    width: 100px !important;
+  }
+
+  .p-inputtext {
+    width: 6.25rem !important;
   }
 
 }
@@ -333,9 +343,11 @@ body {
     font-size: 11px !important;
     padding: 5px !important;
   }
-  .p-datatable .p-datatable-tbody>tr>td{
+
+  .p-datatable .p-datatable-tbody>tr>td {
     padding: 0 5px !important;
   }
+
   .p-icon {
     width: 10px !important;
     height: 10px !important;
