@@ -128,7 +128,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          updateRecordsCount(tableData.filter(t => t.priority !== 1).length);
       }
       setLoading(false)
-      // console.log('update state', postData)
+
    }, [tableData]);
 
    useEffect(() => {
@@ -148,7 +148,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
 
    useEffect(() => {
-      // console.log('post effect', postData);
+
    }, [postData]);
 
    const exQtyBodyTemplate = (options) => {
@@ -157,7 +157,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          className='border-0 calender-datatable disabled xl:w-[100px]'
          useGrouping={false}
          onChange={async (e) => {
-            // console.log(e.value)
+
             setValue1(e.value);
             await updatePostData('qty', e.value, options.id);
             updateRecordCount(options.id, 'qty');
@@ -186,7 +186,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          <InputText
             className='border-0 calender-datatable'
             onChange={async (e) => {
-               await updatePostData('note', e.target.value, options.id);
+               await updatePostData('note', e.value, options.id);
                updateRecordCount(options.id, 'note')
             }} />
       </>
@@ -197,16 +197,14 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       updateRecordCount(id, '');
    };
 
-  
+
    const updateRecordCount = async (id, field) => {
-      console.log('updateRecords', varQty);
-      // console.log(postData);
+
       let qty = 0;
       let date = 0;
 
       if (field == 'qty') {
          // field1
-         // console.log(field, 'field1');
          const indexQty = varQty.findIndex(object => object === id);
          if (indexQty === -1) {
             varQty.push(id)
@@ -215,33 +213,25 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       }
       if (field == 'date') {
          // field2
-         // console.log(field, 'field2');
          const indexDate = varDate.findIndex(object => object === id);
-         console.log('indexDate', indexDate);
+
          if (indexDate === -1) {
-            // await Promise.resolve(setUpdatedDate(setUpdatedDate => [...setUpdatedDate, id]));
             varDate.push(id);
          }
       }
 
-      // return true
-      
-       index = updatedProducts.findIndex(object => object === id);
-       index2 = varQty.findIndex(object2 => object2 === id);
-       index3 = varDate.findIndex(object3 => object3 === id);
-      console.log('qty date', index2, index3, varQty, varDate);
+      index = updatedProducts.findIndex(object => object === id);
+      index2 = varQty.findIndex(object2 => object2 === id);
+      index3 = varDate.findIndex(object3 => object3 === id);
       if (index2 >= 0 && index3 >= 0) {
-         console.log('index', index)
-         console.log('index2', index2)
-         console.log('index3', index3)
          if (index === -1) {
+            console.log('index', index)
             setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
             updateWordCount(wordCount + 1);
          }
       }
    }
    const updatePostData = async (field, val, id) => {
-      // console.log(field, val, id);
       if (field === 'date') {
          val = new Date(val).toISOString();
       }
@@ -264,7 +254,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       } else {
          let newCurData = { ...curData, id: id, [field]: val };
          setPostData([...postData, newCurData]);
-         // console.log('postData', postData);
+
       }
    }
 
@@ -280,7 +270,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          }
          axios.post(`${baseurl}/write_supplier_response_data`, data)
             .then((res) => {
-               console.log(res)
+
             })
             .then((tblData) => {
                setTableData(tblData);
