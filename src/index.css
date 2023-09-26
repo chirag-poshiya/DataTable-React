@@ -19,12 +19,14 @@ body {
   /* background-color: white !important; */
   /* border: 1px solid #ced4da !important; */
   border-radius: 6px;
+  width: 150px !important;
 }
 
 
 .calender-datatable .p-inputtext {
   background-color: white !important;
   border: 1px solid #ced4da !important;
+
 }
 
 .calender-datatable button svg {
@@ -46,6 +48,8 @@ body {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
   margin: 5px 0 !important;
+  width: 150px !important;
+  font-size: unset !important;
 }
 
 .user-login .p-inputtext {
@@ -82,11 +86,16 @@ body {
 }
 
 .p-editable-column {
+  width: 100px !important;
   padding: 8px 0 !important;
 }
 
 .p-datatable .p-datatable-tbody>tr>td {
   padding: 0px 1rem !important;
+}
+
+.p-editable-column:nth-child(2) {
+  width: 110px !important;
 }
 
 ::-webkit-scrollbar {
@@ -112,7 +121,7 @@ body {
   color: #343a40 !important;
 }
 
-.p-datatable-thead>tr>th {
+#first-table .p-datatable-thead>tr>th {
   border-bottom: 2px solid #dee2e6 !important;
 }
 
@@ -126,11 +135,14 @@ body {
 }
 
 #second-table {
-  margin-top: 30px;
+  /* margin-top: 20px; */
 }
 
 #second-table .p-datatable-thead {
-  display: none;
+  /* display: none; */
+  /* position: relative;
+  opacity: 0  ;
+  z-index: -1; */
 }
 
 #second-table .p-datatable-tbody {
@@ -228,9 +240,6 @@ body {
 
 }
 
-.calender-datatable .p-inputtext {
-  text-align: center !important;
-}
 
 .p-dialog .p-dialog-content {
   padding-bottom: 0 !important;
@@ -243,6 +252,10 @@ body {
 
 .p-dialog .p-dialog-footer button:hover {
   background: #2d77f0 !important;
+}
+
+.p-inputnumber {
+  display: inherit !important;
 }
 
 /* spinner */
@@ -278,5 +291,65 @@ body {
 @keyframes spin {
   to {
     transform: rotate(1turn);
+  }
+}
+
+
+@media (max-width: 1440px) {
+  body {
+    font-size: 13px !important;
+
+  }
+
+  .p-inputtext,
+  .calender-datatable .p-inputtext,
+  #first-table .p-datatable-thead>tr>th,
+  #second-table .p-datatable-thead>tr>th,
+  .p-datatable .p-datatable-tbody>tr>td {
+    font-size: 13px !important;
+    padding: 9px !important;
+  }
+
+  .p-datatable .p-datatable-tbody>tr>td {
+    padding: 0 9px !important;
+  }
+
+  .p-icon {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .calender-datatable {
+    width: 100px !important;
+  }
+
+  .p-inputtext {
+    width: 6.25rem !important;
+  }
+
+}
+
+@media (max-width: 1220px) {
+  body {
+    font-size: 11px !important;
+
+  }
+
+  .p-inputtext,
+  .calender-datatable .p-inputtext,
+  #first-table .p-datatable-thead>tr>th,
+  #second-table .p-datatable-thead>tr>th,
+  .p-datatable .p-datatable-tbody>tr>td {
+    font-size: 11px !important;
+    padding: 5px !important;
+  }
+
+  .p-datatable .p-datatable-tbody>tr>td {
+    padding: 0 5px !important;
+  }
+
+  .p-icon {
+    width: 10px !important;
+    height: 10px !important;
   }
 }

@@ -54,7 +54,7 @@ export default function HeaderDataTable() {
             <div className='bg-white py-[10px] px-[30px] flex items-center justify-between'>
                 <div className='text-center'>
                     <p className='text-[30px] font-bold'>Logo</p>
-                    <p className='text-[15px] font-medium'>WMF Update request</p>
+                    <p className='text-[15px] font-medium text-[#4472c4]'>WMF Update request</p>
                 </div>
                 <div className='flex items-center justify-end gap-[10px]'>
                     <div className="open-modal-btn">
@@ -70,7 +70,7 @@ export default function HeaderDataTable() {
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="none"
-                                stroke={isDisabled ? "#343a40" : "#000"}
+                                stroke={isDisabled ? "#343a40" : "#4472c4"}
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -81,11 +81,11 @@ export default function HeaderDataTable() {
                         </Button>
 
                     </div>
-                    <div className='p-2 border rounded-lg flex gap-3 hover:border-[#cbcccf]'>
-                        <p className='text-[#343a40]'>Send Mandatory info</p>
+                    <div className='p-2 border border-[#4472c4] rounded-lg flex gap-3 hover:border-[#cbcccf]'>
+                        <p className='text-[1rem] text-[#4472c4]'>Send Mandatory info</p>
                         <div className='flex items-center justify-center'>
-                            <span className='text-[1rem] font-medium'>{wordCount}</span>
-                            <span className='text-[1rem] font-medium'>/{recordCount}</span>
+                            <span className='text-[1rem] font-medium text-[#4472c4]'>{wordCount}</span>
+                            <span className='text-[1rem] font-medium text-[#4472c4]'>/{recordCount}</span>
                         </div>
                     </div>
                     <Button className='!bg-blue-500 text-[1.25rem] font-medium'>Open Tutorial</Button>

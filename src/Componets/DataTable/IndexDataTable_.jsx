@@ -16,20 +16,27 @@ import NoActionRequir from '../NoActionRequir';
 import { useLocation } from 'react-router-dom';
 import { Dialog } from 'primereact/dialog';
 
-
-
+let varQty = [];
+let varDate = [];
+let index = -1;
+let index2 = -1;
+let index3 = -1;
 
 export default function CustomersDemo({ formId, setLoading, setError }) {
 
 
    const [selectedCustomers, setSelectedCustomers] = useState([]);
    const [updatedProducts, setUpdatedProducts] = useState([]);
+   const [updatedQty, setUpdatedQty] = useState([]);
+   const [updatedDate, setUpdatedDate] = useState([]);
+   const [updatedProducts2, setUpdatedProducts2] = useState([]);
    const rowClass = (data) => {
       return {
          'bg-yellow-3': data.priority === 3,
          '': data.priority === 1,
       };
    };
+
 
    addLocale('es', {
       firstDayOfWeek: 1,
@@ -65,7 +72,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    };
 
    const desableBodyTemplate = () => {
-      return <Calendar disabled className='calender-datatable w-[8rem]' locale="es" />;
+      return <Calendar disabled className='calender-datatable' locale="es" />;
    };
 
    const textEditor = (options) => {
@@ -102,13 +109,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                return res.data.table_data;
             })
             .then(async (tblData) => {
-               console.log('==========tblData')
-               console.log(tblData)
-               console.log('tblData=============')
-               await setTableData(tblData);
-               // await setTable1Data(tableData.filter(t => t.priority !== 1));
-               // await setTable2Data(tableData.filter(t => t.priority === 1));
-               // console.log('..CTOU..', table1Data.length, table1Data)
+               setTableData(tblData);
                await updateRecordsCount(tblData.length);
             })
             .finally(() => {
@@ -121,14 +122,13 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
 
 
    useEffect(() => {
-      console.log('Context tbl data')
       if (tableData) {
          setTable1Data(tableData.filter(t => t.priority !== 1));
          setTable2Data(tableData.filter(t => t.priority === 1));
-         console.log('..CTOU>> ', tableData.filter(t => t.priority !== 1).length, table1Data)
          updateRecordsCount(tableData.filter(t => t.priority !== 1).length);
       }
       setLoading(false)
+
    }, [tableData]);
 
    useEffect(() => {
@@ -145,37 +145,37 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
    const [postData, setPostData] = useState([]);
    const [value1, setValue1] = useState('');
    const today = new Date();
+
+
    useEffect(() => {
-      // console.log('post effect', postData);
+
    }, [postData]);
 
    const exQtyBodyTemplate = (options) => {
       // first input
       return <InputNumber
-         className='border-0 calender-datatable disabled'
-         onValueChange={(e) => {
+         className='border-0 calender-datatable disabled xl:w-[100px]'
+         useGrouping={false}
+         onChange={async (e) => {
+
             setValue1(e.value);
-            updateRecordCount(options.id);
-            updatePostData('qty', e.target.value, options.id);
+            await updatePostData('qty', e.value, options.id);
+            updateRecordCount(options.id, 'qty');
          }
          }
-      // onChange={(e) => {
-      //    updateRecordCount(options.id);
-      //    updatePostData('qty', e.target.value, options.id);
-      // }}
       />;
    };
 
    const exDateBodyTemplate = (options, rowData) => {
       // second input
-      return <Calendar className='!border-0 calender-datatable'
+      return <Calendar className='!border-0 calender-datatable w-[110px]'
          value={rowData.date}
          readOnlyInput
          minDate={today}
          locale="es"
-         onChange={(e) => {
-            updateRecordCount(options.id)
-            updatePostData('date', e.target.value, options.id);
+         onChange={async (e) => {
+            await updatePostData('date', e.target.value, options.id);
+            updateRecordCount(options.id, 'date')
          }}
       />;
    };
@@ -185,23 +185,50 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
       return <>
          <InputText
             className='border-0 calender-datatable'
-            onChange={(e) => {
-               updateRecordCount(options.id)
-               updatePostData('note', e.target.value, options.id);
+            onChange={async (e) => {
+               await updatePostData('note', e.value, options.id);
+               updateRecordCount(options.id, 'note')
             }} />
       </>
    };
 
    const handleInputChange = (e, id) => {
       setInputValue(e.target.value);
-      updateRecordCount(id);
+      updateRecordCount(id, '');
    };
 
-   const updateRecordCount = (id) => {
-      const index = updatedProducts.findIndex(object => object === id);
-      if (index === -1) {
-         setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
-         updateWordCount(wordCount + 1);
+
+   const updateRecordCount = async (id, field) => {
+
+      let qty = 0;
+      let date = 0;
+
+      if (field == 'qty') {
+         // field1
+         const indexQty = varQty.findIndex(object => object === id);
+         if (indexQty === -1) {
+            varQty.push(id)
+
+         }
+      }
+      if (field == 'date') {
+         // field2
+         const indexDate = varDate.findIndex(object => object === id);
+
+         if (indexDate === -1) {
+            varDate.push(id);
+         }
+      }
+
+      index = updatedProducts.findIndex(object => object === id);
+      index2 = varQty.findIndex(object2 => object2 === id);
+      index3 = varDate.findIndex(object3 => object3 === id);
+      if (index2 >= 0 && index3 >= 0) {
+         if (index === -1) {
+            console.log('index', index)
+            setUpdatedProducts(updatedProducts => [...updatedProducts, id]);
+            updateWordCount(wordCount + 1);
+         }
       }
    }
    const updatePostData = async (field, val, id) => {
@@ -226,7 +253,8 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          setPostData(postData_);
       } else {
          let newCurData = { ...curData, id: id, [field]: val };
-         setPostData(postData => [...postData, newCurData]);
+         setPostData([...postData, newCurData]);
+
       }
    }
 
@@ -242,7 +270,7 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
          }
          axios.post(`${baseurl}/write_supplier_response_data`, data)
             .then((res) => {
-               console.log(res)
+
             })
             .then((tblData) => {
                setTableData(tblData);
@@ -260,55 +288,58 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                <div className='border-t'>
                   <div className=''>
                      {table1Data &&
-                        <div className='flex gap-4 w-full mt-[.625rem] px-[1.875rem]'>
-                           <ActionRequir />
-                           <div className='w-[calc(100%_-_6.875rem)]'>
+                        <div className='flex xl:gap-4 gap-3 w-full mt-[.625rem] xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem]'>
+                           <div>
+                              <ActionRequir />
+                              <NoActionRequir />
+                           </div>
+                           <div className='xl:w-[calc(100%_-_116px)] w-[calc(100%_-_92px)]'>
                               <DataTable id="first-table" rowClassName={rowClass} editMode="row" value={table1Data} header={header}
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
                                  emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '114px' }} />
-                                 <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '129px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '242px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '229px' }} />
-                                 <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '226px' }} />
-                                 <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '90px' }} />
-                                 <Column editor={(options) => priceEditor(options)} className="whitespace-nowrap" header="Exp Quanity" body={exQtyBodyTemplate} />
-                                 <Column editor={(options) => textEditor(options)} className="whitespace-nowrap" header="Exp delivery date" body={exDateBodyTemplate} />
-                                 <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ width: '80px', textAlign: 'center' }} body={noteBodyTemplate} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '84px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '69px' }} />
-                                 <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
-                                 <Column className="whitespace-nowrap hidden" field="priority" header="Priority" sortable dataType="date" style={{ minWidth: '104px' }} />
+                                 <Column className="" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} />
+                                 <Column className="" field="part_number" header="Part Number" sortable />
+                                 <Column className="" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" />
+                                 <Column className="" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" />
+                                 <Column className="" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" />
+                                 <Column className="" field="balance" header="Balance" sortable dataType="date" />
+                                 <Column editor={(options) => priceEditor(options)} className="" header="Exp Quanity" body={exQtyBodyTemplate} />
+                                 <Column editor={(options) => textEditor(options)} className="" header="Exp delivery date" body={exDateBodyTemplate} />
+                                 <Column editor={(options) => statusEditor(options)} header='Note' headerStyle={{ textAlign: 'center' }} body={noteBodyTemplate} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} />
+                                 <Column className="" field="w_plus_1" header="W+1" sortable dataType="date" />
+                                 <Column className="" field="w_plus_2" header="W+2" sortable dataType="date" />
+                                 <Column className="" field="w_plus_3" header="W+3" sortable dataType="date" />
+                                 <Column className="" field="material_description" header="Material Description" sortable />
+                                 <Column className=" hidden" field="priority" header="Priority" sortable dataType="date" />
                               </DataTable>
                            </div>
                         </div>
                      }
                      {table2Data &&
-                        <div className='flex gap-4 w-full px-[1.875rem]'>
-                           <NoActionRequir />
-                           <div className='w-[calc(100%_-_6.875rem)]'>
-                              <DataTable id="second-table" rowClassName={rowClass} editMode="row" value={table2Data}
+                        <div className='flex xl:gap-4 gap-3 w-full xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem] justify-end'>
+                           {/* <NoActionRequir /> */}
+                           <div className='xl:w-[calc(100%_-_116px)] w-[calc(100%_-_92px)]'>
+                              <DataTable id="second-table" rowClassName={rowClass} editMode="row" value={table2Data} 
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
                                  emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-                                 <Column className="whitespace-nowrap" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} style={{ minWidth: '137px' }} />
-                                 <Column className="whitespace-nowrap" field="part_number" header="Part Number" sortable style={{ minWidth: '153px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" style={{ minWidth: '266px' }} />
-                                 <Column className="whitespace-nowrap" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" style={{ minWidth: '253px' }} />
-                                 <Column className="whitespace-nowrap" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" style={{ minWidth: '251px' }} />
-                                 <Column className="whitespace-nowrap" field="balance" header="Balance" sortable dataType="date" style={{ minWidth: '114px' }} />
-                                 <Column className="whitespace-nowrap" field="" editor={(options) => priceEditor(options)} body={disableBodyTemplate} />
-                                 <Column className="whitespace-nowrap" field="" editor={(options) => textEditor(options)} showFilterMatchModes={false} body={desableBodyTemplate} />
-                                 <Column className="whitespace-nowrap" field="" editor={(options) => statusEditor(options)} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate} />
-                                 <Column className="whitespace-nowrap" field="w_plus_1" header="W+1" sortable dataType="date" style={{ minWidth: '93px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_2" header="W+2" sortable dataType="date" style={{ minWidth: '93px' }} />
-                                 <Column className="whitespace-nowrap" field="w_plus_3" header="W+3" sortable dataType="date" style={{ minWidth: '93px' }} />
-                                 <Column className="whitespace-nowrap" field="material_description" header="Material Description" sortable style={{ minWidth: '210px' }} />
-                                 <Column className="whitespace-nowrap hidden" field="priority" header="Priority" sortable dataType="date" style={{ minWidth: '104px' }} />
+                                 <Column className=""  field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} />
+                                 <Column className="" field="part_number" header="Part Number" sortable />
+                                 <Column className="" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" />
+                                 <Column className="" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" />
+                                 <Column className="" field="balance_without_promise" header="Balance without Promises" sortable dataType="date" />
+                                 <Column className="" field="balance" header="Balance" sortable dataType="date" />
+                                 <Column className="" field="" editor={(options) => priceEditor(options)} header="Exp Quanity" body={disableBodyTemplate} />
+                                 <Column className="" field="" editor={(options) => textEditor(options)} header="Exp delivery date" showFilterMatchModes={false} body={desableBodyTemplate} />
+                                 <Column className="" field="" editor={(options) => statusEditor(options)} header='Note' bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={disableBodyTemplate} />
+                                 <Column className="" field="w_plus_1" header="W+1" sortable dataType="date" />
+                                 <Column className="" field="w_plus_2" header="W+2" sortable dataType="date" />
+                                 <Column className="" field="w_plus_3" header="W+3" sortable dataType="date" />
+                                 <Column className="" field="material_description" header="Material Description" sortable />
+                                 <Column className=" hidden" field="priority" header="Priority" sortable dataType="date" />
                               </DataTable>
                            </div>
                         </div>

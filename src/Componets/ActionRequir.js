@@ -3,9 +3,9 @@ import React from 'react'
 function ActionRequir() {
     return (
         <div className=''>
-            <div className='text-center bg-white h-full w-full border rounded-[10px] p-4'>
-                <h4 className='font-semibold text-[#495057]'>Action Required</h4>
-                <p className='pt-7 text-[#495057]'>Please insert Exp. Quantity and Exp. Delevery data</p>
+            <div className='text-center bg-white border border-[#4472c4] rounded-[10px] xl:p-4 p-2 xl:w-[100px] w-[80px] mt-[10px]'>
+                <h4 className='font-semibold text-[#4472c4]'>Action Required</h4>
+                <p className='pt-7 text-[#4472c4]'>Please insert Exp. Quantity and Exp. Delevery data</p>
             </div>
         </div>
     )
