@@ -289,7 +289,10 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                   <div className=''>
                      {table1Data &&
                         <div className='flex xl:gap-4 gap-3 w-full mt-[.625rem] xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem]'>
-                           <ActionRequir />
+                           <div>
+                              <ActionRequir />
+                              <NoActionRequir />
+                           </div>
                            <div className='xl:w-[calc(100%_-_116px)] w-[calc(100%_-_92px)]'>
                               <DataTable id="first-table" rowClassName={rowClass} editMode="row" value={table1Data} header={header}
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -315,15 +318,15 @@ export default function CustomersDemo({ formId, setLoading, setError }) {
                         </div>
                      }
                      {table2Data &&
-                        <div className='flex xl:gap-4 gap-3 w-full xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem]'>
-                           <NoActionRequir />
+                        <div className='flex xl:gap-4 gap-3 w-full xl:px-[1.875rem] lg:px-[1.25rem] px-[.9375rem] justify-end'>
+                           {/* <NoActionRequir /> */}
                            <div className='xl:w-[calc(100%_-_116px)] w-[calc(100%_-_92px)]'>
-                              <DataTable id="second-table" rowClassName={rowClass} editMode="row" value={table2Data}
+                              <DataTable id="second-table" rowClassName={rowClass} editMode="row" value={table2Data} 
                                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                  rowsPerPageOptions={[10, 25, 50]} dataKey="id" selection={selectedCustomers} onSelectionChange={(e) => setSelectedCustomers(e.value)}
                                  filters={filters} filterDisplay="menu" globalFilterFields={['name', 'country.name', 'representative.name', 'balance', 'status']}
                                  emptyMessage="No Data found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" >
-                                 <Column className="" field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} />
+                                 <Column className=""  field="plant_code" header="Plant Code" sortable showFilterMatchModes={false} />
                                  <Column className="" field="part_number" header="Part Number" sortable />
                                  <Column className="" field="tot_cum_required_at_day_1" header="Tot, Cum, Required at day-1" sortable dataType="date" />
                                  <Column className="" field="tot_cum_received_by_cfs" header="Tot, Cum, Received by CFS" sortable dataType="date" />
